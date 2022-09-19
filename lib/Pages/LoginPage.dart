@@ -14,11 +14,11 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 237, 29, 14),
-        body: Column(
+        body: ListView(
           children: [
             Center(
               child: Container(
-                margin: EdgeInsets.only(top: 230),
+                margin: EdgeInsets.only(top: 180),
                 child: Image(
                   image: AssetImage(
                     'assets/Group 255.png',
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 150,
+              height: 160,
             ),
             Expanded(
               child: Container(
@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 10,
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 280),
+                      margin: EdgeInsets.only(left: 250),
                       child: Text('Forgot password ?'),
                     ),
                     SizedBox(

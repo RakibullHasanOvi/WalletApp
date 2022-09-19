@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:wallets_app/Pages/WelcomePage.dart';
-import 'Screen/MB_screen.dart';
 
-class HomePage extends StatelessWidget {
+import 'package:wallets_app/Pages/WelcomePage.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    TabController _tabController = TabController(vsync: this, length: 3);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 243, 253, 255),
@@ -14,7 +21,12 @@ class HomePage extends StatelessWidget {
           title: Container(
             alignment: Alignment.centerLeft,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WelcomePage()),
+                );
+              },
               child: Image(
                 image: AssetImage('assets/Group 255.png'),
               ),
@@ -75,49 +87,69 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 80,
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
+                Container(
+                  child: TabBar(
+                    isScrollable: true,
+                    indicatorColor: Colors.transparent,
+                    unselectedLabelColor: Colors.grey,
+                    labelColor: Colors.black,
+                    controller: _tabController,
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          'Mobile Banking',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Bank',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Mobile Recharge',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(left: 35),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    margin: EdgeInsets.all(32),
+                    child: TabBarView(
+                      controller: _tabController,
                       children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            'Bank',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => MoblieBankingItems(),
+                        //       ),
+                        // );
+                        // },
+                        // ),
+                        Text(
+                          'Click this items',
                         ),
-                        SizedBox(
-                          width: 30,
+                        Text(
+                          'Monju',
                         ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            'Mobile Banking',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        Text(
+                          'King Of Bangladesh',
                         ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            'Mobile Recharge',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   ),
