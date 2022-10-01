@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:wallets_app/Pages/Screen/notification.dart';
 import 'package:wallets_app/Pages/WelcomePage.dart';
+import 'package:wallets_app/models/MobileBanking.dart';
+import '../models/pages/bank_item.dart';
+import '../models/pages/mobile_banking_items.dart';
+import '../models/pages/recharge_item.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -10,16 +14,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    final itemList = MobileBanking.generateItem();
     TabController _tabController = TabController(vsync: this, length: 3);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 243, 253, 255),
+        backgroundColor: Colors.blue[50],
+        // backgroundColor: Color.fromARGB(255, 243, 253, 255),
         appBar: AppBar(
           elevation: 2,
           backgroundColor: Colors.white,
-          title: Container(
-            alignment: Alignment.centerLeft,
+          leadingWidth: 200,
+          leading: Container(
+            margin: EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -27,20 +34,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   MaterialPageRoute(builder: (context) => WelcomePage()),
                 );
               },
-              child: Image(
-                image: AssetImage('assets/Group 255.png'),
-              ),
+              child: Image.asset('assets/Group 255.png'),
             ),
           ),
+          // title: Container(
+          //   alignment: Alignment.centerLeft,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => WelcomePage()),
+          //       );
+          //     },
+          //     child: Image.asset('assets/Group 255.png'),
+          //   ),
+          // ),
           actions: [
             Container(
               padding: EdgeInsets.only(
                 right: 18,
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return NotificationPage();
+                    }),
+                  );
+                },
                 icon: Image.asset(
                   'assets/Group 38.png',
+                  height: 22,
                 ),
               ),
             ),
@@ -54,10 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageIcon(
-                      AssetImage('assets/tk.png'),
-                      size: 70,
-                    ),
+                    Image.asset('assets/tk.png'),
                     SizedBox(
                       width: 10,
                     ),
@@ -85,9 +107,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 50,
                 ),
                 Container(
+                  margin: EdgeInsets.only(
+                    left: 16,
+                  ),
                   child: TabBar(
                     isScrollable: true,
                     indicatorColor: Colors.transparent,
@@ -131,25 +156,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => MoblieBankingItems(),
-                        //       ),
-                        // );
-                        // },
-                        // ),
-                        Text(
-                          'Click this items',
-                        ),
-                        Text(
-                          'Monju',
-                        ),
-                        Text(
-                          'King Of Bangladesh',
-                        ),
+                        MobileBankingItems(),
+                        BankingItems(),
+                        MobileRechargeItem(),
                       ],
                     ),
                   ),

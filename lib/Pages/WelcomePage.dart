@@ -24,14 +24,6 @@ class _WelcomePageState extends State<WelcomePage> {
                   image: AssetImage('assets/Group 255.png'),
                   color: Colors.white,
                 ),
-                // Text(
-                //   'সঞ্চয় ওয়ালেট',
-                //   style: TextStyle(
-                //     fontSize: 30,
-                //     color: Colors.white,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
               ),
               SizedBox(height: 100),
               Container(

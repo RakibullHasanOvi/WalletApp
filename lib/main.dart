@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wallets_app/Pages/HomePage.dart';
+
+import 'package:wallets_app/Pages/WelcomePage.dart';
 
 void main() {
   runApp(const WalletApp());
@@ -12,7 +13,7 @@ class WalletApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: WelcomePage(),
     );
   }
 }
