@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/HomePage.dart';
+import 'package:wallets_app/Pages/Screen/profile.dart';
+import 'package:wallets_app/Pages/Screen/report_screen.dart';
 import 'package:wallets_app/models/pages/mbdetails.dart';
 
 TextStyle _textStyle = TextStyle(
@@ -21,15 +24,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   final List<Widget> pages = [
     HomePage(),
-    Center(
-      child: Text('Report', style: _textStyle),
-    ),
+    ReportScreen(),
+    // Center(
+    //   child: Text('Report', style: _textStyle),
+    // ),
     Center(
       child: Text('Menu', style: _textStyle),
     ),
-    Center(
-      child: Text('Profile', style: _textStyle),
-    ),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -47,13 +49,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
           items: [
             BottomNavigationBarItem(
               // backgroundColor: Colors.blue,
-              icon: Icon(
-                Icons.home_outlined,
-                size: 30,
-              ),
-              // icon: Image.asset(
-              //   'assets/home.png',
+              // icon: Icon(
+              //   Icons.home_outlined,
+              //   size: 30,
               // ),
+              icon: SvgPicture.asset(
+                'assets/home.svg',
+                color: _currentIndex == 0 ? Colors.red : Color(0xFF999999),
+              ),
               // backgroundColor: Colors.red,
               label: "Home",
 
@@ -61,9 +64,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
             BottomNavigationBarItem(
               // backgroundColor: Colors.red,
-              icon: Icon(
-                Icons.electric_bolt,
-                size: 30,
+              // icon: Icon(
+              //   Icons.electric_bolt,
+              //   size: 30,
+              // ),
+              icon: SvgPicture.asset(
+                'assets/Report.svg',
+                color: _currentIndex == 1 ? Colors.red : Color(0xFF999999),
               ),
               // icon: Image.asset('assets/Report.png'),
               // backgroundColor: Colors.red,
@@ -73,9 +80,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
             BottomNavigationBarItem(
               // backgroundColor: Colors.green,
-              icon: Icon(
-                Icons.grid_view,
-                size: 30,
+              // icon: Icon(
+              //   Icons.grid_view,
+              //   size: 30,
+              // ),
+              icon: SvgPicture.asset(
+                'assets/grid.svg',
+                color: _currentIndex == 2 ? Colors.red : Color(0xFF999999),
               ),
               // icon: Image.asset('assets/grid.png'),
               // backgroundColor: Colors.red,
@@ -84,9 +95,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
             BottomNavigationBarItem(
               // backgroundColor: Colors.pink,
-              icon: Icon(
-                Icons.person,
-                size: 30,
+              // icon: Icon(
+              //   Icons.person,
+              //   size: 30,
+              // ),
+              icon: SvgPicture.asset(
+                'assets/Profiles.svg',
+                color: _currentIndex == 3 ? Colors.red : Color(0xFF999999),
               ),
               // icon: Image.asset(
               //   'assets/Person1.webp',

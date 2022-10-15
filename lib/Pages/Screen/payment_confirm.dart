@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:wallets_app/Pages/HomePage.dart';
+import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 import 'package:wallets_app/Pages/Screen/notification.dart';
 import 'package:wallets_app/Pages/WelcomePage.dart';
 
@@ -12,12 +15,15 @@ class PaymentConfirm extends StatefulWidget {
 class _PaymentConfirmState extends State<PaymentConfirm> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.blue[50],
+        backgroundColor: Color(0xFFF4F8FB),
+        // backgroundColor: Colors.blue[50],
         // backgroundColor: Colors.blue[50].withOpacity(col),
         appBar: AppBar(
-          elevation: 2,
+          elevation: 0.3,
           backgroundColor: Colors.white,
           leadingWidth: 200,
           leading: Container(
@@ -31,7 +37,11 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
                   ),
                 );
               },
-              child: Image.asset('assets/Group 255.png'),
+              child: SvgPicture.asset(
+                "assets/wallet_logo.svg",
+                // color: Colors.red,
+              ),
+              // child: Image.asset('assets/Group 255.png'),
             ),
           ),
           // title: Container(
@@ -49,8 +59,8 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
           actions: [
             Container(
               padding: EdgeInsets.only(
-                right: 18,
-              ),
+                  // right: 4,
+                  ),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -62,145 +72,268 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
                     ),
                   );
                 },
-                icon: Image.asset(
-                  'assets/Group 38.png',
+                icon: SvgPicture.asset(
+                  'images/Notification.svg',
                   height: 22,
                 ),
               ),
             ),
           ],
         ),
-        body: Container(
-          margin: EdgeInsets.only(top: 50),
-          child: Center(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        body: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 50),
+              child: Center(
+                child: Column(
                   children: [
-                    Image.asset('assets/tk.png'),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          '10,00,000 BDT',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Image.asset('assets/tk.png'),
                         SizedBox(
-                          height: 10,
+                          width: 10,
                         ),
-                        Text(
-                          'Current balance',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                          ),
+                        Column(
+                          children: [
+                            Text(
+                              '10,00,000 BDT',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Current balance',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Container(
+              ),
+            ),
+            //
+            //
+            //1st container use white color and also using opacity....
+            Container(
+              height: height,
+              width: width,
+              color: Colors.white.withOpacity(0.8),
+            ),
+            //
+            //
+            //2nd container use Red color and text , icon , button etc..
+            Container(
+              height: height,
+              width: width,
+              // color: Color(0xFFD6001B),
+              transform: Matrix4.translationValues(0, 150, 0),
+              decoration: BoxDecoration(
+                color: Color(0xFFD6001B),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                ),
+              ),
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
                     margin: EdgeInsets.only(
-                      top: 50,
+                      top: 100,
                     ),
-                    height: MediaQuery.of(context).size.width,
-                    width: MediaQuery.of(context).size.width,
-                    // color: Colors.red[700],
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 237, 29, 14),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
-                      ),
-                    ),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: 100,
-                          ),
-                          child: Image.asset(
-                            'assets/Right_logo.png',
-                            height: 80,
-                            width: 80,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          child: Text(
-                            'Payment',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(),
-                        Container(
-                          child: Text(
-                            "Successful!",
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          child: Text(
-                            'Click the button bellow to continue',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 200,
-                        ),
-                        Container(
-                          // margin: EdgeInsets.only(
-                          //   top: 0,
-                          // ),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Continue',
-                              style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.black,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(300, 50),
-                              primary: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Image.asset(
+                      'assets/Right_logo.png',
+                      height: 80,
+                      width: 80,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    child: Text(
+                      'Payment',
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(),
+                  Container(
+                    child: Text(
+                      "Successful!",
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: Text(
+                      'Click the button bellow to continue',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: height / 4.3),
+                  Container(
+                    // margin: EdgeInsets.only(
+                    //   top: 0,
+                    // ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => BottomNavigation(),
+                            transitionDuration: Duration(seconds: 0),
+                            transitionsBuilder: (_, a, __, c) =>
+                                FadeTransition(opacity: a, child: c),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(
+                          fontSize: 19,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(width / 1.3, 50),
+                        primary: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+// Flexible(
+//                       child: Container(
+//                         margin: EdgeInsets.only(
+//                           top: 50,
+//                         ),
+//                         height: MediaQuery.of(context).size.height,
+//                         width: MediaQuery.of(context).size.width,
+//                         // color: Colors.red[700],
+//                         decoration: BoxDecoration(
+//                           color: Color(0xFFD6001B),
+//                           borderRadius: BorderRadius.only(
+//                             topLeft: Radius.circular(50),
+//                             topRight: Radius.circular(50),
+//                           ),
+//                         ),
+//                         child: Column(
+//                           // mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             Container(
+//                               margin: EdgeInsets.only(
+//                                 top: 100,
+//                               ),
+//                               child: Image.asset(
+//                                 'assets/Right_logo.png',
+//                                 height: 80,
+//                                 width: 80,
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 20,
+//                             ),
+//                             Container(
+//                               child: Text(
+//                                 'Payment',
+//                                 style: TextStyle(
+//                                   fontSize: 30,
+//                                   fontWeight: FontWeight.bold,
+//                                   color: Colors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                             SizedBox(),
+//                             Container(
+//                               child: Text(
+//                                 "Successful!",
+//                                 style: TextStyle(
+//                                   fontSize: 30,
+//                                   fontWeight: FontWeight.bold,
+//                                   color: Colors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 10,
+//                             ),
+//                             Container(
+//                               child: Text(
+//                                 'Click the button bellow to continue',
+//                                 style: TextStyle(
+//                                   fontSize: 12,
+//                                   fontWeight: FontWeight.normal,
+//                                   color: Colors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               height: 200,
+//                             ),
+//                             Container(
+//                               // margin: EdgeInsets.only(
+//                               //   top: 0,
+//                               // ),
+//                               child: ElevatedButton(
+//                                 onPressed: () {
+//                                   Navigator.push(
+//                                     context,
+//                                     PageRouteBuilder(
+//                                       pageBuilder: (_, __, ___) =>
+//                                           BottomNavigation(),
+//                                       transitionDuration: Duration(seconds: 0),
+//                                       transitionsBuilder: (_, a, __, c) =>
+//                                           FadeTransition(opacity: a, child: c),
+//                                     ),
+//                                   );
+//                                 },
+//                                 child: Text(
+//                                   'Continue',
+//                                   style: TextStyle(
+//                                     fontSize: 19,
+//                                     color: Colors.black,
+//                                   ),
+//                                 ),
+//                                 style: ElevatedButton.styleFrom(
+//                                   minimumSize: Size(300, 50),
+//                                   primary: Colors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),

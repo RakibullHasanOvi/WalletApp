@@ -12,17 +12,21 @@ class MobileRechargeItem extends StatelessWidget {
         physics: ScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
         ),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => RechargeFormPage(rechargeList[index]),
-                  // bankList[index]
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => RechargeFormPage(
+                    rechargeList[index],
+                  ),
+                  transitionDuration: Duration(milliseconds: 300),
+                  transitionsBuilder: (_, a, __, c) =>
+                      FadeTransition(opacity: a, child: c),
                 ),
               );
             },

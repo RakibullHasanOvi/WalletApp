@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/models/MobileBanking.dart';
 
 import '../WelcomePage.dart';
@@ -10,9 +11,9 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.blue[50],
+        backgroundColor: Color(0xFFF4F8FB),
         appBar: AppBar(
-          elevation: 2,
+          elevation: 0,
           backgroundColor: Colors.white,
           leadingWidth: 200,
           leading: Container(
@@ -26,18 +27,18 @@ class NotificationPage extends StatelessWidget {
                   ),
                 );
               },
-              child: Image.asset('assets/Group 255.png'),
+              child: SvgPicture.asset('assets/wallet_logo.svg'),
             ),
           ),
           actions: [
             Container(
               padding: EdgeInsets.only(
-                right: 18,
+                right: 4,
               ),
               child: IconButton(
                 onPressed: () {},
-                icon: Image.asset(
-                  'assets/Group 38.png',
+                icon: SvgPicture.asset(
+                  'assets/notification_2.svg',
                   height: 22,
                 ),
               ),
@@ -93,6 +94,7 @@ class NotificationPage extends StatelessWidget {
                 height: 50,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     margin: EdgeInsets.only(
@@ -176,6 +178,7 @@ class NotificationPage extends StatelessWidget {
                 height: 20,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     margin: EdgeInsets.only(

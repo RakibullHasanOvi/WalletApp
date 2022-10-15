@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/Screen/notification.dart';
 import 'package:wallets_app/Pages/WelcomePage.dart';
 import 'package:wallets_app/models/MobileBanking.dart';
@@ -19,10 +20,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.blue[50],
+        backgroundColor: Color(0xFFF4F8FB),
         // backgroundColor: Color.fromARGB(255, 243, 253, 255),
         appBar: AppBar(
-          elevation: 2,
+          elevation: 0,
           backgroundColor: Colors.white,
           leadingWidth: 200,
           leading: Container(
@@ -31,10 +32,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WelcomePage()),
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => WelcomePage(),
+                    transitionDuration: Duration(seconds: 0),
+                    transitionsBuilder: (_, a, __, c) =>
+                        FadeTransition(opacity: a, child: c),
+                  ),
                 );
               },
-              child: Image.asset('assets/Group 255.png'),
+              child: SvgPicture.asset(
+                "assets/wallet_logo.svg",
+                // color: Colors.red,
+              ),
+
+              // child: Image.asset('assets/Group 255.png'),
             ),
           ),
           // title: Container(
@@ -52,21 +63,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           actions: [
             Container(
               padding: EdgeInsets.only(
-                right: 18,
+                right: 4,
               ),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) {
-                      return NotificationPage();
-                    }),
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => NotificationPage(),
+                      transitionDuration: Duration(seconds: 0),
+                      transitionsBuilder: (_, a, __, c) =>
+                          FadeTransition(opacity: a, child: c),
+                    ),
                   );
                 },
-                icon: Image.asset(
-                  'assets/Group 38.png',
+                icon: SvgPicture.asset(
+                  'images/Notification.svg',
                   height: 22,
                 ),
+                // icon: Image.asset(
+                //   'assets/Group 38.png',
+                //   height: 22,
+                // ),
               ),
             ),
           ],

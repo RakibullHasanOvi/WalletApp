@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:wallets_app/Pages/WelcomePage.dart';
 
 void main() {
@@ -11,8 +10,11 @@ class WalletApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
+
+      //Going to the WelcomePage.....
+
       home: WelcomePage(),
     );
   }

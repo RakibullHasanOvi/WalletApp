@@ -8,13 +8,15 @@ class MobileBanking {
 
   static List<MobileBanking> generateItem() {
     return [
-      MobileBanking("assets/bKash_logo.png", 200, 200, "bKash NUmber"),
-      MobileBanking("assets/Nagad_logo.png", 180, 180, "Nagad Number"),
-      MobileBanking("assets/Group 197.png", 180, 180, "Rocket Number"),
-      MobileBanking("assets/Upai.png", 180, 180, "Upai Number"),
-      MobileBanking("assets/tap.png", 180, 180, "tap Number"),
-      MobileBanking("assets/Group 196.png", 180, 180, "M Cash Number"),
-      MobileBanking("assets/Group-271.png", 180, 180, "SureCash Number"),
+      // MobileBanking(
+      //     "images/m_banking_image/bKash.svg", 108, 108, "bKash Number"),
+      MobileBanking("assets/bKash_logo.png", 108, 108, "bKash NUmber"),
+      MobileBanking("assets/Nagad_logo.png", 108, 108, "Nagad Number"),
+      MobileBanking("assets/Group 197.png", 108, 108, "Rocket Number"),
+      MobileBanking("assets/Upai.png", 108, 108, "Upai Number"),
+      MobileBanking("assets/tap.png", 108, 108, "tap Number"),
+      MobileBanking("assets/Group 196.png", 108, 108, "M Cash Number"),
+      MobileBanking("assets/Group-271.png", 108, 108, "SureCash Number"),
     ];
   }
 }
