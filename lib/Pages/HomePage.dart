@@ -16,7 +16,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final itemList = MobileBanking.generateItem();
-    TabController _tabController = TabController(vsync: this, length: 3);
+    TabController _tabController = TabController(
+      vsync: this,
+      length: 3,
+    );
 
     return SafeArea(
       child: Scaffold(
@@ -27,7 +30,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           backgroundColor: Colors.white,
           leadingWidth: 200,
           leading: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -170,6 +173,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 Expanded(
                   child: Container(
+                    // width: 2,
                     margin: EdgeInsets.all(32),
                     child: TabBarView(
                       controller: _tabController,
