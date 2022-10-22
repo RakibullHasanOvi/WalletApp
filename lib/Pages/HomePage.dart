@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/Screen/notification.dart';
 import 'package:wallets_app/Pages/WelcomePage.dart';
 import 'package:wallets_app/models/MobileBanking.dart';
+import 'package:wallets_app/models/pages/giftCard_items.dart';
 import '../models/pages/bank_item.dart';
 import '../models/pages/mobile_banking_items.dart';
 import '../models/pages/recharge_item.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final itemList = MobileBanking.generateItem();
     TabController _tabController = TabController(
       vsync: this,
-      length: 3,
+      length: 4,
     );
 
     return SafeArea(
@@ -33,15 +34,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => WelcomePage(),
-                    transitionDuration: Duration(seconds: 0),
-                    transitionsBuilder: (_, a, __, c) =>
-                        FadeTransition(opacity: a, child: c),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   PageRouteBuilder(
+                //     pageBuilder: (_, __, ___) => WelcomePage(),
+                //     transitionDuration: Duration(seconds: 0),
+                //     transitionsBuilder: (_, a, __, c) =>
+                //         FadeTransition(opacity: a, child: c),
+                //   ),
+                // );
               },
               child: SvgPicture.asset(
                 "assets/wallet_logo.svg",
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/tk.png'),
+                    SvgPicture.asset("images/tk.svg"),
                     SizedBox(
                       width: 10,
                     ),
@@ -168,6 +169,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
+                      Tab(
+                        child: Text(
+                          'Gift Card',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -181,6 +191,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         MobileBankingItems(),
                         BankingItems(),
                         MobileRechargeItem(),
+                        GiftCardItems(),
                       ],
                     ),
                   ),

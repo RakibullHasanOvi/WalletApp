@@ -6,7 +6,7 @@ import 'package:wallets_app/Pages/Screen/profile.dart';
 import 'package:wallets_app/Pages/Screen/report_screen.dart';
 import 'package:wallets_app/models/pages/mbdetails.dart';
 
-TextStyle _textStyle = TextStyle(
+TextStyle _textStyle = const TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.bold,
   letterSpacing: 2,
@@ -25,13 +25,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final List<Widget> pages = [
     HomePage(),
     ReportScreen(),
+    ProfilePage(),
     // Center(
     //   child: Text('Report', style: _textStyle),
     // ),
-    Center(
-      child: Text('Menu', style: _textStyle),
-    ),
-    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -54,11 +51,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
               //   size: 30,
               // ),
               icon: SvgPicture.asset(
-                'assets/home.svg',
+                'assets/grid.svg',
                 color: _currentIndex == 0 ? Colors.red : Color(0xFF999999),
               ),
               // backgroundColor: Colors.red,
-              label: "Home",
+              label: "Menu",
 
               backgroundColor: Colors.red,
             ),
@@ -79,21 +76,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
               backgroundColor: Colors.red,
             ),
             BottomNavigationBarItem(
-              // backgroundColor: Colors.green,
-              // icon: Icon(
-              //   Icons.grid_view,
-              //   size: 30,
-              // ),
-              icon: SvgPicture.asset(
-                'assets/grid.svg',
-                color: _currentIndex == 2 ? Colors.red : Color(0xFF999999),
-              ),
-              // icon: Image.asset('assets/grid.png'),
-              // backgroundColor: Colors.red,
-              label: "Menu",
-              backgroundColor: Colors.red,
-            ),
-            BottomNavigationBarItem(
               // backgroundColor: Colors.pink,
               // icon: Icon(
               //   Icons.person,
@@ -101,7 +83,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               // ),
               icon: SvgPicture.asset(
                 'assets/Profiles.svg',
-                color: _currentIndex == 3 ? Colors.red : Color(0xFF999999),
+                color: _currentIndex == 2 ? Colors.red : Color(0xFF999999),
               ),
               // icon: Image.asset(
               //   'assets/Person1.webp',

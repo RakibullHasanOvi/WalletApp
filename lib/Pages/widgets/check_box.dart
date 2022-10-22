@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CheakBoxWidgets extends StatefulWidget {
   // const CheakBoxWidgets({super.key});
@@ -34,6 +36,103 @@ class _CheakBoxWidgetsState extends State<CheakBoxWidgets> {
             isChecked = value!;
           },
         );
+        if (isChecked) {
+          print('Okay');
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                contentPadding: EdgeInsets.only(
+                  left: 50,
+                ),
+                alignment: Alignment.center,
+                title: Text(
+                  'Terms & Conditions',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                content: Container(
+                  // color: Colors.green,
+                  child: Row(
+                    // mainAxisAlignment:
+                    //     MainAxisAlignment
+                    //         .spaceAround,
+                    children: [
+                      // IconButton(
+                      //   onPressed: (() {}),
+                      //   icon: SvgPicture.asset(
+                      //     'assets/whatsApp.svg',
+                      //     // height: 30,
+                      //     color: Colors.green,
+                      //   ),
+                      //   // icon: Image.asset(
+                      //   //   'assets/Report.png',
+                      //   //   color: Colors.green,
+                      //   // ),
+                      // ),
+                      // SizedBox(
+                      //   width: 5,
+                      // ),
+                      InkWell(
+                        onTap: () {
+                          // launch(
+                          //   "https://www.whatsapp.com",
+                          // );
+                          // setState(() {
+                          //   // _launchURL();
+                          // });
+                        },
+                        child: Text(
+                          '',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // launch("https://www.whatsapp.com");
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Ok',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            },
+          );
+        }
       },
     );
   }

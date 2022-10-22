@@ -14,8 +14,8 @@ class _DropdownMenuWidgetState extends State<DropdownMenuWidget> {
   Widget build(BuildContext context) {
     return Container(
       // alignment: Alignment.centerLeft,
-      height: 90,
-      width: 150,
+      // height: 40,
+      // width: 150,
       // decoration: BoxDecoration(
       //   borderRadius: BorderRadius.circular(15),
       //   color: Color(0xFFFFFFFF),
@@ -30,7 +30,7 @@ class _DropdownMenuWidgetState extends State<DropdownMenuWidget> {
                 fontSize: 15,
                 color: Color(0xFF000000),
               ),
-              menuMaxHeight: 60,
+              menuMaxHeight: 150,
               borderRadius: BorderRadius.circular(15),
               dropdownColor: Colors.white,
               elevation: 0,
@@ -71,7 +71,7 @@ class _DropdownMenuWidgetState extends State<DropdownMenuWidget> {
                 child: Text(
                   'Select',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF000000),
                   ),
@@ -79,7 +79,7 @@ class _DropdownMenuWidgetState extends State<DropdownMenuWidget> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(
                 top: 5,
@@ -88,7 +88,7 @@ class _DropdownMenuWidgetState extends State<DropdownMenuWidget> {
                 "$value",
                 // textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontSize: 14,
                   color: Color(0xFF000000),
                 ),

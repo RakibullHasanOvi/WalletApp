@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/models/MobileBanking.dart';
 
 import '../WelcomePage.dart';
+import 'buttom_navigation.dart';
 
 class NotificationPage extends StatelessWidget {
   // const NotificationPage({Key? key}) : super(key: key);
@@ -20,12 +21,18 @@ class NotificationPage extends StatelessWidget {
             margin: EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePage(),
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => const BottomNavigation(),
                   ),
                 );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => WelcomePage(),
+                //   ),
+                // );
               },
               child: SvgPicture.asset('assets/wallet_logo.svg'),
             ),

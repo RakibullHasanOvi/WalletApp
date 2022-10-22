@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/Screen/otp_screen.dart';
 import 'package:wallets_app/models/m_recharge.dart';
 
+import '../../Pages/Screen/buttom_navigation.dart';
 import '../../Pages/Screen/notification.dart';
 import '../../Pages/Screen/payment_confirm.dart';
 import '../../Pages/WelcomePage.dart';
@@ -25,6 +26,9 @@ class RechargeFormPage extends StatefulWidget {
 }
 
 class _RechargeFormPageState extends State<RechargeFormPage> {
+  //
+  //
+  final _formValue = GlobalKey<FormState>();
   // String dropdownValue = list.first;
   double _pinYoffset = 0;
   double _pinOpacity = 1;
@@ -117,315 +121,317 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                       Container(
                         // margin: EdgeInsets.only(top: 50),
                         child: Center(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset('assets/tk.png'),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        '10,00,000 BDT',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                          child: Form(
+                            key: _formValue,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // Container(
+                                    //   height: 50,
+                                    //   margin: EdgeInsets.only(
+                                    //     left: 10,
+                                    //   ),
+                                    //   child: FloatingActionButton(
+                                    //     // backgroundColor: Colors.black,
+                                    //     backgroundColor: Color(0xFFF4F8FB),
+                                    //     onPressed: () {
+                                    //       Navigator.pop(context);
+                                    //     },
+                                    //     child: Icon(
+                                    //       Icons.arrow_back_outlined,
+                                    //       color: Colors.black,
+                                    //       size: 30,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   width: 50,
+                                    // ),
+                                    Image.asset('assets/tk.png'),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          '10,00,000 BDT',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Current balance',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 60,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 45),
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white,
+                                        // image: DecorationImage(
+                                        //   image: AssetImage(
+                                        //     "assets/bKash_logo.png",
+                                        //   ),
+                                        // ),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Image.asset(
+                                          widget._rechargeList.imgUrl,
+                                          // height: 20,
+
+                                          // "assets/bKash_logo.png",
+
+                                          //   height: 20,
+                                          //   width: 20,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 10,
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: 20,
                                       ),
-                                      Text(
-                                        'Current balance',
+                                      child: Text(
+                                        "Recharge",
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 22,
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 60,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 45),
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: Colors.white,
-                                      // image: DecorationImage(
-                                      //   image: AssetImage(
-                                      //     "assets/bKash_logo.png",
-                                      //   ),
-                                      // ),
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Image.asset(
-                                        widget._rechargeList.imgUrl,
-                                        // height: 20,
-
-                                        // "assets/bKash_logo.png",
-
-                                        //   height: 20,
-                                        //   width: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 20,
-                                    ),
-                                    child: Text(
-                                      "Recharge",
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: 40,
-                                margin: EdgeInsets.only(
-                                  top: 30,
-                                  left: 50,
-                                  right: 50,
+                                  ],
                                 ),
-                                // height: 60,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: .5,
+                                Container(
+                                  // height: 40,
+                                  margin: EdgeInsets.only(
+                                    top: 30,
+                                    left: 50,
+                                    right: 50,
+                                  ),
+                                  // height: 60,
+                                  child: TextFormField(
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: .5,
+                                      ),
+                                      fillColor: Colors.white,
+                                      prefixIcon: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          // height: 38,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Colors.blue,
+                                          ),
+                                          child: Image.asset(
+                                            'assets/user-plus.png',
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      filled: true,
+                                      hintText: "Search phonebook...",
+                                      hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                      ),
                                     ),
-                                    fillColor: Colors.white,
-                                    prefixIcon: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        // height: 58,
-                                        // width: 60,
-                                        decoration: BoxDecoration(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter some number';
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 20,
+                                    left: 50,
+                                    right: 50,
+                                  ),
+                                  child: Container(
+                                    // height: 45,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(8),
-                                          color: Colors.blue,
+                                          borderSide: BorderSide.none,
                                         ),
-                                        child: Image.asset(
-                                          'assets/user-plus.png',
-                                          color: Colors.white,
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: .5,
+                                          horizontal: 15,
+                                        ),
+                                        filled: true,
+                                        hintText: widget._rechargeList.label,
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
                                         ),
                                       ),
-                                    ),
-
-                                    // icon: Container(
-                                    //   height: 50,
-                                    //   width: 50,
-
-                                    //   decoration: BoxDecoration(
-                                    //     color: Colors.blue,
-                                    //     borderRadius: BorderRadius.circular(10),
-                                    //   ),
-
-                                    //   child: Image.asset(
-                                    //     'assets/user-plus.png',
-                                    //     color: Colors.white,
-                                    //   ),
-
-                                    //   Icon(
-                                    //     Icons.add_call,
-
-                                    //   ),
-                                    // ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-
-                                    filled: true,
-                                    hintText: "Search phonebook...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter some text';
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 30,
-                                  left: 50,
-                                  right: 50,
-                                ),
-                                child: Container(
-                                  height: 45,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: BorderSide.none,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 10,
+                                    left: 50,
+                                    right: 50,
+                                  ),
+                                  child: Container(
+                                    // height: 45,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: .5,
+                                          horizontal: 15,
+                                        ),
+                                        filled: true,
+                                        hintText: "Amount",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                        ),
                                       ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: .5,
-                                        horizontal: 15,
-                                      ),
-                                      filled: true,
-                                      hintText: widget._rechargeList.label,
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter some number';
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 20,
-                                  left: 50,
-                                  right: 50,
-                                ),
-                                child: Container(
-                                  height: 45,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: .5,
-                                        horizontal: 15,
-                                      ),
-                                      filled: true,
-                                      hintText: "Amount",
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                // decoration: BoxDecoration(
-                                //   color: Colors.white,
-                                //   borderRadius: BorderRadius.circular(20),
-
+                                // SizedBox(
+                                //   height: 20,
                                 // ),
-                                alignment: Alignment.centerLeft,
-                                margin: EdgeInsets.only(left: 50),
-                                child: DropdownMenuWidget(),
-                                // child: Container(
-                                //   height: MediaQuery.of(context).size.width * .1,
-                                //   width: MediaQuery.of(context).size.height * .2,
-                                //   decoration: BoxDecoration(
-                                //     color: Colors.white,
-                                //     borderRadius: BorderRadius.circular(10),
-                                //   ),
-                                //   child: DropdownButton(
-                                //     borderRadius: BorderRadius.circular(20),
-                                //     dropdownColor: Colors.white,
-                                //     value: dropdownValue,
-                                //     icon: Icon(Icons.arrow_downward),
-                                //     // elevation: 16,
-                                //     // style: TextStyle(color: Colors.deepPurple),
-                                //     // underline: Container(
-                                //     //   height: 2,
-                                //     //   color: Colors.deepPurpleAccent,
-                                //     // ),
-                                //     onChanged: (String? value) {
-                                //       // This is called when the user selects an item.
-                                //       setState(() {
-                                //         dropdownValue = value!;
-                                //       });
-                                //     },
-                                //     hint: Text(
-                                //       'Seleted',
-                                //     ),
-                                //     items: list.map<DropdownMenuItem<String>>(
-                                //       (String value) {
-                                //         return DropdownMenuItem(
-                                //           value: value,
-                                //           child: Text(value),
-                                //         );
-                                //       },
-                                //     ).toList(),
-                                //   ),
-                                // ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      margin: EdgeInsets.only(left: 45),
-                                      child: CheakBoxWidgets(),
-                                      // child: Image.asset('assets/Group 147.png'),
-                                      // child: Icon(
-                                      //   Icons.check_box,
-                                      // ),
-                                    ),
-                                  ),
-                                  // SizedBox(
-                                  //   width: 10,
-                                  // ),
-                                  Container(
+                                Container(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("Terms & Conditions"),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(width / 1.4, 50),
-                                  primary: Color(0xFFD6001B),
+                                    margin: EdgeInsets.only(left: 50),
+                                    child: DropdownMenuWidget()),
+                                SizedBox(
+                                  height: 5,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    // _pageState = 1;
-                                    if (_pageState != 0) {
-                                      _pageState = 0;
-                                    } else {
-                                      _pageState = 1;
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 45),
+                                        child: CheakBoxWidgets(),
+                                        // child: Image.asset('assets/Group 147.png'),
+                                        // child: Icon(
+                                        //   Icons.check_box,
+                                        // ),
+                                      ),
+                                    ),
+                                    // SizedBox(
+                                    //   width: 10,
+                                    // ),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text("Terms & Conditions"),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: Size(width / 1.4, 50),
+                                    primary: Color(0xFFD6001B),
+                                  ),
+                                  onPressed: () {
+                                    if (_formValue.currentState!.validate()) {
+                                      setState(() {
+                                        if (_pageState == 0) {
+                                          _pageState = 1;
+                                        }
+                                      });
                                     }
-                                  });
-                                  // Navigator.of(context).push(
-                                  //   PageRouteBuilder(
-                                  //     opaque: false, // set to false
-                                  //     pageBuilder: (_, __, ___) => OtpScreen(),
-                                  //   ),
-                                  // );
-                                },
-                                child: Text(
-                                  "Send",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
+                                  },
+                                  child: Text(
+                                    "Send",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        height: 50,
+                        margin: EdgeInsets.only(
+                            // left: 50,
+                            ),
+                        alignment: Alignment.bottomCenter,
+                        child: FloatingActionButton(
+                          backgroundColor: Color(0xFFF4F8FB),
+                          splashColor: Color(0xFFD6001B),
+                          hoverColor: Colors.green,
+                          // Color(0xFFD6001B),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) {
+                                  return BottomNavigation();
+                                },
                               ),
-                            ],
+                            );
+                          },
+                          child: Icon(
+                            Icons.arrow_back_outlined,
+                            color: Colors.black,
+                            size: 35,
                           ),
                         ),
                       ),
@@ -439,17 +445,17 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
             //
             GestureDetector(
               onTap: () {
-                setState(
-                  () {
-                    _pageState = 0;
-                    // if (_pageState != 1) {
-                    //   _pageState = 1;
-                    // } else {
-                    //   _pageState = 0;
-                    // }
-                    // print('Click MotherF**ker');
-                  },
-                );
+                // setState(
+                //   () {
+                //     _pageState = 0;
+                //     // if (_pageState != 1) {
+                //     //   _pageState = 1;
+                //     // } else {
+                //     //   _pageState = 0;
+                //     // }
+                //     // print('Click MotherF**ker');
+                //   },
+                // );
               },
               child: AnimatedContainer(
                 curve: Curves.linear,

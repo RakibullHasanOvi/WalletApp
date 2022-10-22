@@ -48,6 +48,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
     return SafeArea(
       top: false,
+      // bottom: false,
       child: Scaffold(
         backgroundColor: _backGroundColor,
         body: Column(

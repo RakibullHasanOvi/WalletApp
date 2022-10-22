@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:wallets_app/Pages/HomePage.dart';
 import 'package:wallets_app/Pages/Screen/+in_page.dart';
 import 'package:wallets_app/Pages/Screen/-out_page%20.dart';
+import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 
 import '../WelcomePage.dart';
 import 'notification.dart';
@@ -99,6 +101,7 @@ class _ReportScreenState extends State<ReportScreen>
             Container(
               child: Row(
                 children: [
+                  //using back button
                   GestureDetector(
                     child: Container(
                       height: 40,
@@ -122,7 +125,15 @@ class _ReportScreenState extends State<ReportScreen>
                       ),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => BottomNavigation(),
+                          transitionDuration: Duration(seconds: 0),
+                          transitionsBuilder: (_, a, __, c) =>
+                              FadeTransition(opacity: a, child: c),
+                        ),
+                      );
                     },
                   ),
                   SizedBox(

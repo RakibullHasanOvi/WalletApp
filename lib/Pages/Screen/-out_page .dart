@@ -32,8 +32,8 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 20,
-                ),
+                    // width: 10,
+                    ),
                 Container(
                   margin: EdgeInsets.only(
                     top: 15,
@@ -73,7 +73,7 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 40,
+                  width: 20,
                 ),
                 Flexible(
                   child: Container(
@@ -111,8 +111,8 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 20,
-                ),
+                    // width: 20,
+                    ),
                 Container(
                   margin: EdgeInsets.only(
                     top: 15,
@@ -152,7 +152,7 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 40,
+                  width: 20,
                 ),
                 Flexible(
                   child: Container(
@@ -190,7 +190,7 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Container(
                   margin: EdgeInsets.only(
@@ -269,8 +269,8 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 20,
-                ),
+                    // width: 20,
+                    ),
                 Container(
                   margin: EdgeInsets.only(
                     top: 15,
@@ -310,7 +310,7 @@ class MinusOutPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 70,
+                  width: 60,
                 ),
                 Flexible(
                   child: Container(

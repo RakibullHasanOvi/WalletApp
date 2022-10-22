@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 import 'package:wallets_app/Pages/Screen/notification.dart';
 import '../WelcomePage.dart';
 
@@ -22,10 +23,10 @@ class ProfilePage extends StatelessWidget {
           margin: EdgeInsets.only(left: 10),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WelcomePage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => WelcomePage()),
+              // );
             },
             child: SvgPicture.asset('assets/wallet_logo.svg'),
           ),
@@ -72,6 +73,14 @@ class ProfilePage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.4),
+                    // spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 2), // changes position of shadow
+                  ),
+                ],
                 // border: Border(
                 //   bottom: BorderSide(
                 //     width: 1.0,
@@ -84,7 +93,20 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                      top: 25,
+                      top: 10,
+                      left: 30,
+                    ),
+                    child: Text(
+                      'RohimulKarimKhondokarForhad',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10,
                       left: 30,
                     ),
                     child: Text(
@@ -411,7 +433,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                      left: 20,
+                      left: 15,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -438,6 +460,30 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 50,
+              child: FloatingActionButton(
+                backgroundColor: Color(0xFFF4F8FB),
+                splashColor: Color(0xffD6001B),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => BottomNavigation(),
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_back_outlined,
+                  color: Colors.black,
+                  size: 35,
+                  // color: Color(0xFFD6001B),
+                ),
               ),
             ),
           ],
