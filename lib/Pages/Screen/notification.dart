@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:wallets_app/models/MobileBanking.dart';
-
-import '../WelcomePage.dart';
 import 'buttom_navigation.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -12,7 +9,7 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFF4F8FB),
+        backgroundColor: const Color(0xFFF4F8FB),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,

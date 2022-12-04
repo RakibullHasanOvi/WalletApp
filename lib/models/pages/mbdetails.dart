@@ -1,31 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
-// import 'package:wallet_ui/Pages/screen/pin_screen.dart';
-// import 'package:wallet_ui/Pages/widgets/cheak_box.dart';
+import 'package:wallets_app/Pages/Screen/notification.dart';
 import 'package:wallets_app/Pages/Screen/otp_screen.dart';
-import 'package:wallets_app/Pages/widgets/dropdown_menu.dart';
-import 'package:wallets_app/models/MobileBanking.dart';
 
-import '../../Pages/Screen/notification.dart';
-import '../../Pages/WelcomePage.dart';
-import '../../Pages/widgets/check_box.dart';
-// import '../../Pages/screen/notificatio_page.dart';
-// import '../../Pages/welcome_page.dart';
-// import '../mobile_banking.dart';
-
-//List for  dropdown menu..
+//!List for  dropdown menu..
 List<String> list = [
   "Personal",
   "Agent",
 ];
+List<Myarr> persons = [];
+
+class Myarr {
+  dynamic name, number;
+  Myarr(this.name, this.number);
+  static List<Myarr> getSuggestions(String query) =>
+      List.of(persons).where((user) {
+        final userLower = user.name.toLowerCase();
+        final queryLower = query.toLowerCase();
+        final userNumber = user.number;
+        final queryNumber = query;
+        return userLower.contains(queryLower) ||
+            userNumber.contains(queryNumber);
+      }).toList();
+}
+
+var myarr = [];
 
 class MobileBankingFormPage extends StatefulWidget {
-  final MobileBanking _itemsList;
-  MobileBankingFormPage(this._itemsList);
-  // const MobileBankingFormPage({
-  //   Key? key,
-  // }) : super(key: key);
+//Calling mobile_banking item..
+  final name, logo, type;
+  const MobileBankingFormPage(
+      {Key? key, required this.name, required this.logo, required this.type})
+      : super(key: key);
 
   @override
   State<MobileBankingFormPage> createState() => _MobileBankingFormPageState();
@@ -33,18 +43,70 @@ class MobileBankingFormPage extends StatefulWidget {
 
 class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
   //
-  final _formValue = GlobalKey<FormState>();
+  //Contact list calling.
+  List<Contact>? _contacts;
+  bool _permissionDenied = false;
   //
+  final _sugestionfieldController = TextEditingController();
+
+  //
+  String value = '';
+  bool isChecked = false;
+  final _formValue = GlobalKey<FormState>();
   String dropdownValue = list.first;
   int _pagestate = 0;
-  var _backGroundColor = Color(0xFFF4F8FB);
+  var _backGroundColor = const Color(0xFFF4F8FB);
 
   double pinYoffset = 0;
   double windowWidth = 0;
   double windowHeight = 0;
   double _pinOpaity = 1;
+  // Contect access in pjhone device
+  // List<Contact> contacts = [];
+  // List<Contact> contactsFiltered = [];
+  TextEditingController searchController = TextEditingController();
+
+  //
+  @override
+  void initState() {
+    super.initState();
+    _fetchContacts();
+  }
+
+  Future _fetchContacts() async {
+    if (!await FlutterContacts.requestPermission(readonly: true)) {
+      setState(() => _permissionDenied = true);
+    } else {
+      final contacts = await FlutterContacts.getContacts(withProperties: true);
+      setState(() => _contacts = contacts);
+      for (var i = 0; i < _contacts!.length; i++) {
+        // myarr.add(_contacts?[i].displayName);
+
+        var num = _contacts?[i].phones;
+        for (var j = 0; j < num!.length; j++) {
+          persons.add(Myarr(_contacts?[i].displayName,
+              num[j].number.replaceAll(RegExp('[^0-9]'), "")));
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // bool isSearching = searchController.text.isEmpty;
+    //Terms and conditions....
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.black;
+      }
+      return Colors.black;
+    }
+
     // Set height width (MediaQuery)
     windowHeight = MediaQuery.of(context).size.height;
     windowWidth = MediaQuery.of(context).size.width;
@@ -55,8 +117,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
         _backGroundColor = _backGroundColor;
         pinYoffset = windowHeight;
         _pinOpaity = 1;
-        // windowHeight = windowHeight;
-        // windowWidth = windowWidth;
+
         break;
 
       //
@@ -64,12 +125,14 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
       case 1:
         _backGroundColor = _backGroundColor;
         pinYoffset = 0;
-        _pinOpaity = 0.9;
+        _pinOpaity = 0.97;
         //
         //
 
         break;
     }
+    // print('hola bitchola');
+    // var getSuggestions;
     return SafeArea(
       child: Scaffold(
         backgroundColor: _backGroundColor,
@@ -105,10 +168,13 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                   height: 22,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     PageRouteBuilder(
                       pageBuilder: (_, __, ___) => NotificationPage(),
+                      transitionDuration: const Duration(milliseconds: 100),
+                      transitionsBuilder: (_, a, __, c) =>
+                          FadeTransition(opacity: a, child: c),
                     ),
                   );
                 },
@@ -121,6 +187,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
+            // _fetchContacts();
           },
           child: Stack(
             children: [
@@ -130,7 +197,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                 width: windowWidth,
                 color: _backGroundColor,
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(
+                duration: const Duration(
                   milliseconds: 1000,
                 ),
                 //ListView use kora hoyeche karon Page scroll korar jonno..
@@ -138,43 +205,71 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                   // ?
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 30),
+                      margin: const EdgeInsets.only(top: 0),
                       child: Center(
                         //Using form...
                         child: Form(
                           key: _formValue, //form for key...
                           child: Column(
                             children: [
+                              //
+                              //
+                              // Back Button use...
+                              Container(
+                                alignment: Alignment.topLeft,
+                                child: GestureDetector(
+                                  child: Container(
+                                    // alignment: Alignment.topLeft,
+                                    height: 38,
+                                    width: 38,
+                                    margin: EdgeInsets.only(
+                                      left: 48,
+                                      top: 12,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      // color: Color(0xFFF4F8FB),
+                                      color: Colors.black,
+                                    ),
+                                    // margin: EdgeInsets.only(
+                                    //   top: 7,
+                                    //   left: 7,
+                                    // ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 8),
+                                      child: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Color(0xFFF4F8FB),
+                                        // size: 35,
+                                      ),
+                                    ),
+                                  ),
+
+                                  //Call back for buttomNavigation Page...
+                                  onTap: () {
+                                    // Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (_, __, ___) =>
+                                            const BottomNavigation(),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              //end of back button....
+
+                              //Start of blance image...
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Container(
-                                  //   height: 50,
-                                  //   margin: EdgeInsets.only(
-                                  //     left: 40,
-                                  //   ),
-                                  //   child: FloatingActionButton(
-                                  //     // backgroundColor: Colors.black,
-                                  //     backgroundColor: Color(0xFFF4F8FB),
-                                  //     onPressed: () {
-                                  //       Navigator.pop(context);
-                                  //     },
-                                  //     child: Icon(
-                                  //       Icons.arrow_back_outlined,
-                                  //       color: Colors.black,
-                                  //       size: 30,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   width: 50,
-                                  // ),
                                   SvgPicture.asset('images/tk.svg'),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Column(
-                                    children: [
+                                    children: const [
                                       Text(
                                         '10,00,000 BDT',
                                         style: TextStyle(
@@ -196,46 +291,35 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 60,
                               ),
                               Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: 45),
-                                    height: 80,
-                                    width: 80,
+                                    margin: const EdgeInsets.only(left: 45),
+                                    height: 95,
+                                    width: 95,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.white,
-                                      // image: DecorationImage(
-                                      //   image: AssetImage(
-                                      //     "assets/bKash_logo.png",
-                                      //   ),
-                                      // ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Image.asset(
-                                        widget._itemsList.imgUrl,
-                                        // height: widget._itemsList.height,
-                                        // width: widget._itemsList.width,
-                                        // height: 20,
-
-                                        // "assets/bKash_logo.png",
-
-                                        // height: 10,
-                                        // width: 10,
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          widget.logo,
+                                        ),
                                       ),
                                     ),
+                                    // child: Image.network(
+                                    //   widget.logo,
+                                    // ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                       left: 20,
                                     ),
                                     child: Text(
-                                      "Mobile Banking",
-                                      style: TextStyle(
+                                      widget.type,
+                                      style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -243,72 +327,104 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
 
                               //1st TextField's ccontainer...
-                              Container(
-                                margin: EdgeInsets.symmetric(
-                                  // vertical: 15,
-                                  horizontal: 50,
-                                ),
-                                // height: 60,
-                                child: TextFormField(
-                                  textAlign: TextAlign.center,
-                                  // textAlign: TextAlign.center,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 10,
+                              Column(
+                                children: [
+//
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                      // vertical: 10,
+                                      horizontal: 50,
                                     ),
-                                    fillColor: Colors.white,
-                                    prefixIcon: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        // height: 58,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          color: Colors.blue,
-                                        ),
-                                        child: Image.asset(
-                                          'assets/user-plus.png',
-                                          color: Colors.white,
+                                    child: TypeAheadField<Myarr>(
+                                      minCharsForSuggestions: 2,
+                                      textFieldConfiguration:
+                                          TextFieldConfiguration(
+                                        controller: _sugestionfieldController,
+                                        onSubmitted: (Contact) {
+                                          _sugestionfieldController.text =
+                                              Contact;
+                                        },
+                                        maxLengthEnforcement:
+                                            MaxLengthEnforcement.enforced,
+                                        decoration: InputDecoration(
+                                          // fillColor: Colors.white,
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          hintText: 'Search Phonebook..',
+                                          contentPadding: EdgeInsets.all(5),
+                                          prefixIcon: GestureDetector(
+                                            onTap: () {
+                                              print('bukachondro');
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 10),
+                                              // height: 30,
+                                              width: 50,
+                                              // margin:
+                                              //     const EdgeInsets.only(right: 10),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                color: Colors.blue,
+                                              ),
+                                              child: Image.asset(
+                                                'assets/user-plus.png',
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          // focusedBorder: OutlineInputBorder(),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                          ),
                                         ),
                                       ),
+                                      suggestionsCallback: (pattern) async {
+                                        return await Myarr.getSuggestions(
+                                            pattern);
+                                      },
+                                      itemBuilder: (context, suggestion) {
+                                        return ListTile(
+                                          leading: Icon(Icons.person),
+                                          title: Text(suggestion.name),
+                                          subtitle: Text(suggestion.number),
+                                        );
+                                      },
+                                      onSuggestionSelected: (suggestion) {
+                                        _sugestionfieldController.text =
+                                            suggestion.number;
+                                      },
                                     ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    hintText: "Search phonebook...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter some text';
-                                    }
-                                  },
-                                ),
+                                  )
+                                  // Text('This numbe is $_Number'),
+                                ],
                               ),
 
                               //2nd TextField usign paddig...
                               Container(
-                                margin: EdgeInsets.symmetric(
-                                  vertical: 15,
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: 10,
                                   horizontal: 50,
                                 ),
                                 // height: 40,
                                 child: TextFormField(
+                                  controller: _sugestionfieldController,
+                                  // onChanged: (val) {
+                                  //   setState(() {
+                                  //     updateNumber();
+                                  //   });
+                                  // },
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
+                                    contentPadding: const EdgeInsets.symmetric(
                                       // vertical: 10,
                                       horizontal: 13,
                                     ),
@@ -318,8 +434,9 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                       borderSide: BorderSide.none,
                                     ),
                                     filled: true,
-                                    hintText: widget._itemsList.label,
-                                    hintStyle: TextStyle(
+                                    // hintText: "$_Number",
+                                    hintText: widget.name,
+                                    hintStyle: const TextStyle(
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -334,7 +451,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                               //3rd TextField using padding....
 
                               Container(
-                                margin: EdgeInsets.symmetric(
+                                margin: const EdgeInsets.symmetric(
                                   // vertical: 2,
                                   horizontal: 50,
                                 ),
@@ -343,7 +460,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
+                                    contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 13,
                                     ),
                                     fillColor: Colors.white,
@@ -353,7 +470,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                     ),
                                     filled: true,
                                     hintText: "Amount",
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -364,171 +481,300 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                   },
                                 ),
                               ),
-                              // SizedBox(
-                              //   height: 20,
-                              // ),
+
+                              // Select Dropdown menu......
+
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 45,
                                 ),
-                                child: DropdownMenuWidget(),
+                                child: Container(
+                                  // alignment: Alignment.centerLeft,
+                                  // height: 40,
+                                  // width: 150,
+                                  // decoration: BoxDecoration(
+                                  //   borderRadius: BorderRadius.circular(15),
+                                  //   color: Color(0xFFFFFFFF),
+                                  // ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        DropdownButton<String>(
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFF000000),
+                                          ),
+                                          menuMaxHeight: 150,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          dropdownColor: Colors.white,
+                                          elevation: 0,
+                                          icon: const Icon(
+                                            Icons.keyboard_arrow_down_outlined,
+                                          ),
+                                          items: [
+                                            const DropdownMenuItem<String>(
+                                              value: 'Personal',
+                                              child: Text('Personal'),
+                                            ),
+                                            const DropdownMenuItem<String>(
+                                              value: 'Agent',
+                                              child: Text('Agent'),
+                                            ),
+                                          ],
+                                          onChanged: (_value) {
+                                            value = _value.toString();
+                                            // if (_value!.isEmpty) {
+                                            //   print('dambuss');
+                                            // } else {
+                                            setState(
+                                              () {
+                                                value = _value.toString();
+                                              },
+                                            );
+                                          },
+                                          hint: Container(
+                                            // alignment: Alignment.centerLeft,
+                                            // height: MediaQuery.of(context).size.width * 1,
+                                            // width: MediaQuery.of(context).size.height * .2,
+                                            // decoration: BoxDecoration(
+                                            //   borderRadius: BorderRadius.circular(10),
+                                            //   color: Colors.white,
+                                            // ),
+                                            // height: 90,
+                                            // width: 150,
+                                            // decoration: BoxDecoration(
+                                            //   borderRadius: BorderRadius.circular(15),
+                                            //   color: Colors.white,
+                                            // ),
+                                            child: const Text(
+                                              'Select',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color(0xFF000000),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          alignment: Alignment.centerLeft,
+                                          margin: const EdgeInsets.only(
+                                            top: 5,
+                                          ),
+                                          child: Text(
+                                            "$value",
+                                            // textAlign: TextAlign.start,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14,
+                                              color: Color(0xFF000000),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-
-                              //DropDown er jonno containner newa hoise..
-                              // Container(
-                              //   // decoration: BoxDecoration(
-                              //   //   color: Colors.white,
-                              //   //   borderRadius: BorderRadius.circular(20),
-                              //   // ),
-                              //   alignment: Alignment.centerLeft,
-                              //   margin: EdgeInsets.only(left: 55),
-                              //   child: DropdownButton(
-                              //     borderRadius: BorderRadius.circular(20),
-                              //     dropdownColor: Colors.white,
-                              //     value: dropdownValue,
-                              //     icon: const Icon(Icons.arrow_drop_down_sharp),
-                              //     // elevation: 16,
-                              //     // style: TextStyle(color: Colors.deepPurple),
-                              //     // underline: Container(
-                              //     //   height: 2,
-                              //     //   color: Colors.deepPurpleAccent,
-                              //     // ),
-                              //     onChanged: (String? value) {
-                              //       // This is called when the user selects an item.
-                              //       setState(() {
-                              //         dropdownValue = value!;
-                              //       });
-                              //     },
-                              //     items: list.map<DropdownMenuItem<String>>(
-                              //         (String value) {
-                              //       return DropdownMenuItem(
-                              //         value: value,
-                              //         child: Text(value),
-                              //       );
-                              //     }).toList(),
-                              //   ),
-                              // ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
+
+                              // trems & conditions...
+
                               Row(
                                 children: [
                                   GestureDetector(
                                     onTap: () {},
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 40),
-                                      child: CheakBoxWidgets(),
+                                      margin: const EdgeInsets.only(left: 40),
+                                      child: Checkbox(
+                                        checkColor: Colors.white,
+                                        fillColor:
+                                            MaterialStateProperty.resolveWith(
+                                                getColor),
+                                        value: isChecked,
+                                        onChanged: (bool? value) {
+                                          setState(
+                                            () {
+                                              isChecked = value!;
+                                            },
+                                          );
+                                        },
+                                      ),
                                       // child: Image.asset('assets/Group 147.png'),
                                       // child: Icon(
                                       //   Icons.check_box,
                                       // ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 0,
                                   ),
                                   Container(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("Terms & Conditions"),
+                                    child: const Text("Terms & Conditions"),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   bottom: 20,
                                 ),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(290, 50),
-                                    primary: Color(0xFFD6001B),
+                                    minimumSize: const Size(290, 50),
+                                    primary: const Color(0xFFD6001B),
                                   ),
                                   onPressed: () {
+                                    // this conditions for form valitions....
                                     if (_formValue.currentState!.validate()) {
-                                      setState(
-                                        () {
-                                          _pagestate = 1;
-                                          if (_pagestate == 0) {
-                                            _pagestate = 1;
-                                          }
-                                          // else {
-                                          //   _pagestate = 0;
-                                          // }
-                                        },
-                                      );
-                                      // ScaffoldMessenger.of(context)
-                                      //     .showSnackBar(
-                                      //   const SnackBar(
-                                      //     content: Text('Processing Data'),
-                                      //   ),
-                                      // );
+                                      if (isChecked) {
+                                        if (value.isEmpty) {
+                                          print('dambuss');
+                                        } else {
+                                          setState(
+                                            () {
+                                              // _pagestate = 1;
+                                              if (_pagestate == 0) {
+                                                _pagestate = 1;
+                                              }
+                                              // else {
+                                              //   _pagestate = 0;
+                                              // }
+                                            },
+                                          );
+                                          print("Okay");
+                                        }
+                                        print('Nice');
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20.0),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.only(
+                                                left: 50,
+                                              ),
+                                              alignment: Alignment.center,
+                                              title: const Text(
+                                                'Terms & Conditions',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              content: Container(
+                                                // color: Colors.green,
+                                                child: Row(
+                                                  // mainAxisAlignment:
+                                                  //     MainAxisAlignment
+                                                  //         .spaceAround,
+                                                  children: [
+                                                    // IconButton(
+                                                    //   onPressed: (() {}),
+                                                    //   icon: SvgPicture.asset(
+                                                    //     'assets/whatsApp.svg',
+                                                    //     // height: 30,
+                                                    //     color: Colors.green,
+                                                    //   ),
+                                                    //   // icon: Image.asset(
+                                                    //   //   'assets/Report.png',
+                                                    //   //   color: Colors.green,
+                                                    //   // ),
+                                                    // ),
+                                                    // SizedBox(
+                                                    //   width: 5,
+                                                    // ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        // launch(
+                                                        //   "https://www.whatsapp.com",
+                                                        // );
+                                                        // setState(() {
+                                                        //   // _launchURL();
+                                                        // });
+                                                      },
+                                                      child: const Text(
+                                                        '',
+                                                        style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator
+                                                            .pushReplacement(
+                                                          context,
+                                                          PageRouteBuilder(
+                                                            pageBuilder: (context,
+                                                                animation,
+                                                                secondaryAnimation) {
+                                                              return const BottomNavigation();
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: const Text(
+                                                        'Cancel',
+                                                        style: TextStyle(
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        // launch("https://www.whatsapp.com");
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        'Ok',
+                                                        style: TextStyle(
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
+                                      print('Done');
                                     }
-                                    // if (_formValue.currentState!.validate()) {
-                                    //   return
-
-                                    // } else {
-                                    //   print('Error');
-                                    // }
-
-                                    // setState(
-                                    //   () {
-                                    //     // _pagestate = 1;
-                                    //     if (_pagestate != 1) {
-                                    //       _pagestate = 1;
-                                    //     } else {
-                                    //       _pagestate = 0;
-                                    //     }
-                                    //   },
-                                    // );
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (ctx) {
-                                    //       return const PinScreen();
-                                    //       // return PaymentConfirm();
-                                    //     },
-                                    //   ),
-                                    // );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Send",
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
                                     ),
-                                  ),
-                                ),
-                              ),
-                              // PinScreen(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                height: 50,
-                                margin: EdgeInsets.only(
-                                  left: 50,
-                                ),
-                                alignment: Alignment.bottomLeft,
-                                child: FloatingActionButton(
-                                  backgroundColor: Color(0xFFF4F8FB),
-                                  splashColor: Color(0xFFD6001B),
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation,
-                                            secondaryAnimation) {
-                                          return BottomNavigation();
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.arrow_back_outlined,
-                                    color: Colors.black,
-                                    size: 35,
                                   ),
                                 ),
                               ),
@@ -543,28 +789,28 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
 
               //Using gesterDetector ....
               GestureDetector(
-                // onTap: () {
-                //   setState(
-                //       // () {
-                //       //   _pagestate = 0;
-                //       //   print('OnClick');
-                //       },
-                //       );
-                // },
+                onTap: () {
+                  setState(
+                    () {
+                      _pagestate = 0;
+                      print('OnClick');
+                    },
+                  );
+                },
                 child: AnimatedContainer(
-                  duration: Duration(
-                    milliseconds: 0,
+                  duration: const Duration(
+                    milliseconds: 200,
                   ),
                   curve: Curves.easeInOutExpo,
                   // color: Colors.black,
                   transform: Matrix4.translationValues(0, pinYoffset, 0),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Colors.white.withOpacity(_pinOpaity),
                     // color: Colors.black,
                   ),
 
                   //PinScreen Widgest.....
-                  child: OtpScreen(),
+                  child: const OtpScreen(),
                 ),
               ),
             ],
@@ -572,522 +818,5 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
         ),
       ),
     );
-    //   ),
-    // );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_svg/svg.dart';
-// import 'package:wallets_app/Pages/Screen/otp_screen.dart';
-// import 'package:wallets_app/Pages/widgets/dropdown_menu.dart';
-// // import '../../Pages/Screen/payment_confirm.dart';
-// import '../../Pages/Screen/notification.dart';
-// import '../../Pages/WelcomePage.dart';
-// import '../../Pages/widgets/check_box.dart';
-// import '../MobileBanking.dart';
-
-// //Seleted Button list
-
-// List<String> list = [
-//   "Personal",
-//   "Agent",
-// ];
-
-// class MobileBankingFormPage extends StatefulWidget {
-//   // Call Mobile Banking list
-
-//   final MobileBanking _itemsList;
-//   MobileBankingFormPage(this._itemsList);
-//   // const MobileBankingFormPage({
-//   //   Key? key,
-//   // }) : super(key: key);
-
-//   @override
-//   State<MobileBankingFormPage> createState() => _MobileBankingFormPageState();
-// }
-
-// class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
-//   String dropdownValue = list.first;
-//   //
-//   //
-//   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-//   //
-//   double _pinYoffset = 0;
-//   double _pinOpacity = 1;
-//   int _pageState = 0;
-//   var _backGroundColor = Color(0xFFF4F8FB);
-//   double windowWidth = 0;
-//   double windowHeight = 0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     windowHeight = MediaQuery.of(context).size.height;
-//     windowWidth = MediaQuery.of(context).size.width;
-//     switch (_pageState) {
-//       case 0:
-//         _pinYoffset = windowHeight;
-//         _pinOpacity = 1;
-//         _backGroundColor = _backGroundColor;
-//         break;
-
-//       case 1:
-//         _backGroundColor = _backGroundColor;
-//         _pinYoffset = 0;
-//         _pinOpacity = 0.7;
-//         break;
-//     }
-
-//     return SafeArea(
-//       child: Scaffold(
-//         backgroundColor: Color(0xFFF4F8FB),
-//         // backgroundColor: Colors.blue[50],
-//         // backgroundColor: Color.fromARGB(255, 243, 253, 255),
-//         appBar: AppBar(
-//           centerTitle: false,
-//           elevation: 0,
-//           backgroundColor: Colors.white,
-//           leadingWidth: 150,
-//           leading: Container(
-//             margin: EdgeInsets.only(left: 10),
-//             child: GestureDetector(
-//               onTap: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => WelcomePage(),
-//                   ),
-//                 );
-//               },
-//               child: SvgPicture.asset(
-//                 "assets/wallet_logo.svg",
-//                 // color: Colors.red,
-//               ),
-//             ),
-//           ),
-//           actions: [
-//             Container(
-//               padding: EdgeInsets.only(
-//                 right: 4,
-//               ),
-//               child: IconButton(
-//                 iconSize: 10,
-//                 icon: SvgPicture.asset(
-//                   'images/Notification.svg',
-//                   height: 22,
-//                 ),
-//                 onPressed: () {
-//                   Navigator.push(
-//                     context,
-//                     PageRouteBuilder(
-//                       pageBuilder: (_, __, ___) => NotificationPage(),
-//                       transitionDuration: Duration(seconds: 0),
-//                       transitionsBuilder: (_, a, __, c) =>
-//                           FadeTransition(opacity: a, child: c),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-
-//         // Now Start body's work..
-
-//         body: GestureDetector(
-//           onTap: () {
-//             FocusScope.of(context).unfocus();
-//           },
-//           child: Stack(
-//             children: [
-//               ListView(
-//                 children: [
-//                   Container(
-//                     height: windowHeight,
-//                     width: windowWidth,
-//                     child: Column(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       // ?
-//                       children: [
-//                         Container(
-//                           margin: EdgeInsets.only(top: 40),
-//                           child: Center(
-//                             child: Column(
-//                               children: [
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.center,
-//                                   children: [
-//                                     SvgPicture.asset('images/tk.svg'),
-//                                     // Image.asset('assets/tk.png'),
-//                                     SizedBox(
-//                                       width: 10,
-//                                     ),
-//                                     Column(
-//                                       children: [
-//                                         Text(
-//                                           '10,00,000 BDT',
-//                                           style: TextStyle(
-//                                             fontSize: 20,
-//                                             fontWeight: FontWeight.bold,
-//                                           ),
-//                                         ),
-//                                         SizedBox(
-//                                           height: 10,
-//                                         ),
-//                                         Text(
-//                                           'Current balance',
-//                                           style: TextStyle(
-//                                             fontSize: 18,
-//                                             fontWeight: FontWeight.normal,
-//                                           ),
-//                                         ),
-//                                       ],
-//                                     )
-//                                   ],
-//                                 ),
-//                                 SizedBox(
-//                                   height: 60,
-//                                 ),
-//                                 Row(
-//                                   children: [
-//                                     Container(
-//                                       margin: EdgeInsets.only(left: 45),
-//                                       height: 70,
-//                                       width: 70,
-//                                       decoration: BoxDecoration(
-//                                         borderRadius: BorderRadius.circular(20),
-//                                         color: Colors.white,
-//                                         // image: DecorationImage(
-//                                         //   image: AssetImage(
-//                                         //     "assets/bKash_logo.png",
-//                                         //   ),
-//                                         // ),
-//                                       ),
-//                                       child: Padding(
-//                                         padding: EdgeInsets.all(5.0),
-//                                         // child: SvgPicture.asset(
-//                                         //     'images/bank_image/AB_bank.svg'),
-//                                         child: Image.asset(
-//                                           widget._itemsList.imgUrl,
-//                                           // height: 20,
-
-//                                           // "assets/bKash_logo.png",
-
-//                                           //   height: 20,
-//                                           //   width: 20,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                     Container(
-//                                       margin: EdgeInsets.only(
-//                                         left: 20,
-//                                       ),
-//                                       child: Text(
-//                                         "Mobile Banking",
-//                                         style: TextStyle(
-//                                           fontSize: 22,
-//                                           fontWeight: FontWeight.normal,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                                 Container(
-//                                   // height: 40,
-//                                   margin: EdgeInsets.only(
-//                                     top: 30,
-//                                     left: 50,
-//                                     right: 50,
-//                                     bottom: 20,
-//                                   ),
-//                                   // height: 60,
-//                                   child: Form(
-//                                     key: formKey,
-//                                     child: TextFormField(
-//                                       //   // Validation for using in phonebook...
-//                                       validator: (value) {
-//                                         if (value!.isEmpty ||
-//                                             RegExp(r'^[0-9]+$')
-//                                                 .hasMatch(value)) {
-//                                           return "Enter your mobile number";
-//                                         } else {
-//                                           return null;
-//                                         }
-//                                       },
-
-//                                       textAlign: TextAlign.center,
-//                                       keyboardType: TextInputType.number,
-//                                       decoration: InputDecoration(
-//                                         contentPadding: EdgeInsets.symmetric(
-//                                           vertical: 5,
-//                                         ),
-//                                         fillColor: Colors.white,
-//                                         prefixIcon: GestureDetector(
-//                                           onTap: () {},
-//                                           child: Container(
-//                                             // height: ,
-//                                             // width: 42,
-//                                             decoration: BoxDecoration(
-//                                               borderRadius:
-//                                                   BorderRadius.circular(8),
-//                                               color: Colors.blue,
-//                                             ),
-//                                             child: Padding(
-//                                               padding: EdgeInsets.all(9.0),
-//                                               child: SvgPicture.asset(
-//                                                 'images/user-plus.svg',
-//                                                 color: Colors.white,
-//                                               ),
-//                                             ),
-//                                           ),
-//                                         ),
-//                                         border: OutlineInputBorder(
-//                                           borderRadius:
-//                                               BorderRadius.circular(8),
-//                                           borderSide: BorderSide.none,
-//                                         ),
-//                                         filled: true,
-//                                         hintText: "Search phonebook...",
-//                                         hintStyle: TextStyle(
-//                                           color: Colors.grey,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Padding(
-//                                   padding: EdgeInsets.only(
-//                                     top: 30,
-//                                     left: 50,
-//                                     right: 50,
-//                                     // bottom: 50,
-//                                   ),
-//                                   child: Container(
-//                                     // height:0,
-//                                     child: Form(
-//                                       key: formKey,
-//                                       child: TextFormField(
-//                                         validator: (value) {
-//                                           if (value!.isEmpty ||
-//                                               RegExp(r'^[0-9]+$')
-//                                                   .hasMatch(value)) {
-//                                             return "Enter your mobile number";
-//                                           } else {
-//                                             return null;
-//                                           }
-//                                         },
-//                                         keyboardType: TextInputType.number,
-//                                         decoration: InputDecoration(
-//                                           contentPadding: EdgeInsets.symmetric(
-//                                               vertical: 5, horizontal: 15),
-//                                           fillColor: Colors.white,
-//                                           border: OutlineInputBorder(
-//                                             borderRadius:
-//                                                 BorderRadius.circular(8),
-//                                             borderSide: BorderSide.none,
-//                                           ),
-//                                           filled: true,
-//                                           hintText: widget._itemsList.label,
-//                                           hintStyle: TextStyle(
-//                                             color: Colors.grey,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Padding(
-//                                   padding: EdgeInsets.only(
-//                                     top: 20,
-//                                     left: 50,
-//                                     right: 50,
-//                                   ),
-//                                   child: Container(
-//                                     height: 40,
-//                                     child: TextFormField(
-//                                       keyboardType: TextInputType.number,
-//                                       decoration: InputDecoration(
-//                                         contentPadding: EdgeInsets.symmetric(
-//                                             vertical: 5, horizontal: 15),
-//                                         fillColor: Colors.white,
-//                                         border: OutlineInputBorder(
-//                                           borderRadius:
-//                                               BorderRadius.circular(8),
-//                                           borderSide: BorderSide.none,
-//                                         ),
-//                                         filled: true,
-//                                         hintText: "Amount",
-//                                         hintStyle: TextStyle(
-//                                           color: Colors.grey,
-//                                         ),
-//                                       ),
-//                                       // key: formKey,
-//                                       // validator: (value) {
-//                                       //   if (value!.isEmpty) {
-//                                       //     //  ||RegExp(r'^[0-9]+$')
-//                                       //     //     .hasMatch(value)) {
-//                                       //     return "Enter your mobile number";
-//                                       //   } else {
-//                                       //     return null;
-//                                       //   }
-//                                       // },
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 SizedBox(
-//                                   height: 20,
-//                                 ),
-//                                 Container(
-//                                   margin: EdgeInsets.symmetric(horizontal: 50),
-//                                   alignment: Alignment.centerLeft,
-//                                   child: DropdownMenuWidget(),
-//                                 ),
-//                                 // Container(
-//                                 //   // decoration: BoxDecoration(
-//                                 //   //   color: Colors.white,
-//                                 //   //   borderRadius: BorderRadius.circular(20),
-
-//                                 //   // ),
-//                                 //   alignment: Alignment.centerLeft,
-//                                 //   margin: EdgeInsets.only(left: 55),
-//                                 //   child: DropdownButton(
-//                                 //     // hint: Text('Select'),
-//                                 //     // focusColor: Colors.blue,
-
-//                                 //     // itemHeight: 4,
-//                                 //     // underline: ,
-//                                 //     borderRadius: BorderRadius.circular(20),
-//                                 //     dropdownColor: Colors.white,
-//                                 //     value: dropdownValue,
-//                                 //     icon: Icon(Icons.arrow_drop_down),
-//                                 //     // elevation: 16,
-//                                 //     // style: TextStyle(color: Colors.deepPurple),
-//                                 //     // underline: Container(
-//                                 //     //   height: 2,
-//                                 //     //   color: Colors.deepPurpleAccent,
-//                                 //     // ),
-//                                 //     onChanged: (String? value) {
-//                                 //       // This is called when the user selects an item.
-//                                 //       setState(() {
-//                                 //         dropdownValue = value!;
-//                                 //       });
-//                                 //     },
-//                                 //     items: list.map<DropdownMenuItem<String>>(
-//                                 //         (String value) {
-//                                 //       return DropdownMenuItem(
-//                                 //         value: value,
-//                                 //         child: Text(value),
-//                                 //       );
-//                                 //     }).toList(),
-//                                 //   ),
-//                                 // ),
-//                                 SizedBox(
-//                                   height: 10,
-//                                 ),
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.start,
-//                                   children: [
-//                                     GestureDetector(
-//                                       onTap: () {},
-//                                       child: Container(
-//                                         margin: EdgeInsets.only(left: 45),
-//                                         child: CheakBoxWidgets(),
-
-//                                         // child: Image.asset('assets/Group 147.png'),
-//                                         // child: Icon(
-//                                         //   Icons.check_box,
-//                                         // ),
-//                                       ),
-//                                     ),
-//                                     // SizedBox(
-//                                     //   width: 10,
-//                                     // ),
-//                                     Container(
-//                                       // alignment: Alignment.centerLeft,
-//                                       child: Text("Terms & Conditions"),
-//                                     ),
-//                                   ],
-//                                 ),
-//                                 SizedBox(
-//                                   height: 30,
-//                                 ),
-//                                 ElevatedButton(
-//                                   style: ElevatedButton.styleFrom(
-//                                     minimumSize: Size(windowHeight / 2.8, 50),
-//                                     primary: Color.fromARGB(255, 237, 29, 14),
-//                                   ),
-//                                   onPressed: () {
-//                                     if (formKey.currentState!.validate()) {
-//                                       setState(() {
-//                                         // _pageState = 1;
-//                                         if (_pageState != 0) {
-//                                           _pageState = 0;
-//                                         } else {
-//                                           _pageState = 1;
-//                                         }
-//                                       });
-//                                     }
-//                                     // Navigator.of(context).push(
-//                                     //   PageRouteBuilder(
-//                                     //     opaque: false, // set to false
-//                                     //     pageBuilder: (_, __, ___) => OtpScreen(),
-//                                     //   ),
-//                                     // );
-//                                     // Navigator.push(
-//                                     //   context,
-//                                     //   MaterialPageRoute(
-//                                     //     builder: (ctx) {
-//                                     //       return OtpScreen();
-//                                     //     },
-//                                     //   ),
-//                                     // );
-//                                   },
-//                                   child: Text(
-//                                     "Send",
-//                                     style: TextStyle(
-//                                       fontSize: 20,
-//                                       color: Colors.white,
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               GestureDetector(
-//                 onTap: () {
-//                   setState(
-//                     () {
-//                       _pageState = 0;
-//                       // if (_pageState != 1) {
-//                       //   _pageState = 1;
-//                       // } else {
-//                       //   _pageState = 0;
-//                       // }
-//                       // print('Click MotherF**ker');
-//                     },
-//                   );
-//                 },
-//                 child: AnimatedContainer(
-//                   curve: Curves.linear,
-//                   duration: Duration(
-//                     milliseconds: 1000,
-//                   ),
-//                   color: Colors.white.withOpacity(_pinOpacity),
-//                   transform: Matrix4.translationValues(0, _pinYoffset, 0),
-//                   child: OtpScreen(),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

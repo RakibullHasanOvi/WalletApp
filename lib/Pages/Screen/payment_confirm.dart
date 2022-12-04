@@ -201,7 +201,7 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
                     // ),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (_, __, ___) => BottomNavigation(),

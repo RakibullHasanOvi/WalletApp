@@ -12,9 +12,6 @@ class WalletApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      //Going to the WelcomePage.....
-
       home: WelcomePage(),
     );
   }

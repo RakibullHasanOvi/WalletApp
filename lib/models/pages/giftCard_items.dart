@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
 import '../gift_card.dart';
 import 'giftCard_detailes.dart';
-// import 'package:wallet_ui/models/gift_card.dart';
-// import 'package:wallet_ui/models/pages/bank_details.dart';
-// import 'package:wallet_ui/models/pages/giftCard_detailes.dart';
 
 class GiftCardItems extends StatelessWidget {
-  // const MobileBankingItems({Key? key}) : super(key: key);
+  GiftCardItems({Key? key}) : super(key: key);
   final giftCard = GiftCard.items();
 // MobileBankingItems(this.mbList);
 

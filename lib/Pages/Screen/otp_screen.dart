@@ -27,12 +27,6 @@ class _OtpScreenState extends State<OtpScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(50),
-                  // height: 30,
-                  // width: 30,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(3),
-                  // ),
-
                   child: OTPTextField(
                     otpFieldStyle: OtpFieldStyle(
                       borderColor: Color(0xFFD6D6D6),
