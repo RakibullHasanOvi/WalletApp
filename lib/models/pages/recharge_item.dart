@@ -10,7 +10,7 @@ class MobileRechargeItem extends StatelessWidget {
     //!Using Future Builder..
     return FutureBuilder(
       //!Calling getURL..
-      future: getmethod('http://54.226.160.184/user/recharge/'),
+      future: getmethod('http://zune360.com/api/user/recharge/'),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
@@ -39,12 +39,12 @@ class MobileRechargeItem extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (_, __, ___) => RechargeFormPage(
-                        name: api[index]['name'].toString(),
-                        logo: "http://54.226.160.184" +
-                            api[index]['logo'].toString(),
-                        type: api[index]['type'].toString(),
+                        name: snapshot.data![index]['name'].toString(),
+                        logo: getDomain() +
+                            snapshot.data![index]['logo'].toString(),
+                        type: snapshot.data![index]['type'].toString(),
                       ),
-                      transitionDuration: Duration(milliseconds: 300),
+                      transitionDuration: const Duration(milliseconds: 300),
                       transitionsBuilder: (_, a, __, c) =>
                           FadeTransition(opacity: a, child: c),
                     ),
@@ -56,7 +56,7 @@ class MobileRechargeItem extends StatelessWidget {
                     color: Colors.white,
                     image: DecorationImage(
                       image: NetworkImage(
-                        "http://54.226.160.184" + api[index]['logo'].toString(),
+                        getDomain() + snapshot.data![index]['logo'].toString(),
                       ),
                     ),
                   ),

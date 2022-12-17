@@ -9,11 +9,11 @@ class BankingItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       //!Calling getURL..
-      future: getmethod('http://54.226.160.184/user/bank/'),
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+      future: getmethod('http://zune360.com/api/user/bank/'),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
-            margin: EdgeInsets.only(top: 50),
+            margin: const EdgeInsets.only(top: 50),
             alignment: Alignment.topCenter,
             child: const CircularProgressIndicator(
               strokeWidth: 3,
@@ -22,7 +22,7 @@ class BankingItems extends StatelessWidget {
         } else {
           //! Using GridView Builder..
           return GridView.builder(
-//Calling api lenght.
+//?Calling api lenght.
             itemCount: snapshot.data!.length,
             shrinkWrap: true,
             physics: const ScrollPhysics(),
@@ -38,12 +38,12 @@ class BankingItems extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (_, __, ___) => BankFormPage(
-                        name: api[index]['name'].toString(),
-                        logo: "http://54.226.160.184" +
-                            api[index]['logo'].toString(),
-                        type: api[index]['type'].toString(),
+                        name: snapshot.data[index]['name'].toString(),
+                        logo: getDomain() +
+                            snapshot.data[index]['logo'].toString(),
+                        type: snapshot.data[index]['type'].toString(),
                       ),
-                      transitionDuration: Duration(milliseconds: 300),
+                      transitionDuration: const Duration(milliseconds: 300),
                       transitionsBuilder: (_, a, __, c) =>
                           FadeTransition(opacity: a, child: c),
                     ),
@@ -55,7 +55,7 @@ class BankingItems extends StatelessWidget {
                     color: Colors.white,
                     image: DecorationImage(
                       image: NetworkImage(
-                        "http://54.226.160.184" + api[index]['logo'].toString(),
+                        getDomain() + api[index]['logo'].toString(),
                       ),
                     ),
                   ),

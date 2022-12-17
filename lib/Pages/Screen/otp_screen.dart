@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -25,6 +26,10 @@ class _OtpScreenState extends State<OtpScreen> {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SvgPicture.asset(
+                  'assets/Security_pin.svg',
+                  height: 150,
+                ),
                 Container(
                   padding: const EdgeInsets.all(50),
                   child: OTPTextField(

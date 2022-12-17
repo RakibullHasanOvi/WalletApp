@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/LoginPage.dart';
 import 'package:wallets_app/Pages/Screen/addFund.dart';
 import 'package:wallets_app/Pages/Screen/change_pin.dart';
-import 'package:wallets_app/Pages/Screen/notification.dart';
+import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
 import 'package:wallets_app/Pages/Screen/support.dart';
 import 'package:http/http.dart' as http;
 

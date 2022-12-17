@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'buttom_navigation.dart';
+import '../buttom_navigation.dart';
 
 class NotificationPage extends StatelessWidget {
   // const NotificationPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class NotificationPage extends StatelessWidget {
           backgroundColor: Colors.white,
           leadingWidth: 200,
           leading: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
                 Navigator.pushReplacement(
@@ -36,7 +36,7 @@ class NotificationPage extends StatelessWidget {
           ),
           actions: [
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 4,
               ),
               child: IconButton(
@@ -59,7 +59,7 @@ class NotificationPage extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                         top: 30,
                         left: 20,
                       ),
@@ -69,21 +69,21 @@ class NotificationPage extends StatelessWidget {
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back_ios_new,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                     width: 60,
                   ),
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: 30,
                     ),
-                    child: Text(
+                    child: const Text(
                       'NOTIFICATON',
                       style: TextStyle(
                         fontSize: 18,
@@ -94,14 +94,14 @@ class NotificationPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 20,
                     ),
                     height: 50,
@@ -117,22 +117,19 @@ class NotificationPage extends StatelessWidget {
                       width: 30,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 17,
                   ),
                   Flexible(
                     child: Column(
                       // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // alignment: Alignment.centerLeft,
-                          child: Text(
-                            'MOBILE BANKING',
-                            style: TextStyle(
-                              fontSize: 10,
-                              letterSpacing: 2,
-                            ),
+                      children: const [
+                        Text(
+                          'MOBILE BANKING',
+                          style: TextStyle(
+                            fontSize: 10,
+                            letterSpacing: 2,
                           ),
                         ),
                         Text(
@@ -153,10 +150,10 @@ class NotificationPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
-                  Text(
+                  const Text(
                     'Pending',
                     style: TextStyle(
                       fontSize: 12,
@@ -165,10 +162,10 @@ class NotificationPage extends StatelessWidget {
                       // letterSpacing: 3,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
-                  Text(
+                  const Text(
                     "5000.00 BDT",
                     style: TextStyle(
                       fontSize: 13,
@@ -178,19 +175,19 @@ class NotificationPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 20,
                     ),
                     height: 50,
                     width: 50,
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
@@ -201,22 +198,19 @@ class NotificationPage extends StatelessWidget {
                       width: 40,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Flexible(
                     child: Column(
                       // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          // alignment: Alignment.centerLeft,
-                          child: Text(
-                            'MOBILE BANKING',
-                            style: TextStyle(
-                              fontSize: 10,
-                              letterSpacing: 2,
-                            ),
+                      children: const [
+                        Text(
+                          'MOBILE BANKING',
+                          style: TextStyle(
+                            fontSize: 10,
+                            letterSpacing: 2,
                           ),
                         ),
                         Text(
@@ -237,10 +231,10 @@ class NotificationPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Text(
+                  const Text(
                     'Completed',
                     style: TextStyle(
                       fontSize: 12,
@@ -249,10 +243,10 @@ class NotificationPage extends StatelessWidget {
                       // letterSpacing: 3,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
-                  Text(
+                  const Text(
                     "20,000.00 BDT",
                     style: TextStyle(
                       fontSize: 13,

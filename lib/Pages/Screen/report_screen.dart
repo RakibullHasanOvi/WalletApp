@@ -6,7 +6,7 @@ import 'package:wallets_app/Pages/Screen/-out_page%20.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 
 import '../WelcomePage.dart';
-import 'notification.dart';
+import 'notifiations/notification.dart';
 // import 'package:wallet_app/Pages/Screen/+in_page.dart';
 // import 'package:wallet_app/Pages/Screen/-out_page.dart';
 // import 'package:wallet_app/Pages/WelcomePage.dart';

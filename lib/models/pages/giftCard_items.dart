@@ -12,8 +12,8 @@ class GiftCardItems extends StatelessWidget {
     return GridView.builder(
         itemCount: giftCard.length,
         shrinkWrap: true,
-        physics: ScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        physics: const ScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
@@ -26,7 +26,7 @@ class GiftCardItems extends StatelessWidget {
                 PageRouteBuilder(
                   pageBuilder: (_, __, ___) =>
                       GiftCardFormPage(giftCard[index]),
-                  transitionDuration: Duration(seconds: 0),
+                  transitionDuration: const Duration(seconds: 0),
                   transitionsBuilder: (_, a, __, c) =>
                       FadeTransition(opacity: a, child: c),
                 ),

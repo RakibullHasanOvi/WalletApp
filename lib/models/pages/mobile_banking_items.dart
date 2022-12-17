@@ -9,13 +9,13 @@ class MobileBankingItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       //!Calling getURL..
-      future: getmethod('http://54.226.160.184/user/mobile_bank/'),
+      future: getmethod('http://zune360.com/api/user/mobile_bank/'),
       builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
-            margin: EdgeInsets.only(top: 50),
+            margin: const EdgeInsets.only(top: 50),
             alignment: Alignment.topCenter,
-            child: CircularProgressIndicator(
+            child: const CircularProgressIndicator(
               strokeWidth: 3,
             ),
           );
@@ -38,12 +38,12 @@ class MobileBankingItems extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (_, __, ___) => MobileBankingFormPage(
-                        name: api[index]['name'].toString(),
-                        logo: "http://54.226.160.184" +
-                            api[index]['logo'].toString(),
-                        type: api[index]['type'].toString(),
+                        name: snapshot.data![index]['name'].toString(),
+                        logo: getDomain() +
+                            snapshot.data![index]['logo'].toString(),
+                        type: snapshot.data![index]['type'].toString(),
                       ),
-                      transitionDuration: Duration(milliseconds: 300),
+                      transitionDuration: const Duration(milliseconds: 300),
                       transitionsBuilder: (_, a, __, c) =>
                           FadeTransition(opacity: a, child: c),
                     ),
@@ -55,7 +55,7 @@ class MobileBankingItems extends StatelessWidget {
                     color: Colors.white,
                     image: DecorationImage(
                       image: NetworkImage(
-                        "http://54.226.160.184" + api[index]['logo'].toString(),
+                        getDomain() + snapshot.data![index]['logo'].toString(),
                       ),
                     ),
                   ),

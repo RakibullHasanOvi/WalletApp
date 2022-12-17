@@ -5,46 +5,40 @@ import 'package:http/http.dart' as http;
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 
 class LoginButton extends StatefulWidget {
+  final String phoneNumber;
+  final String password;
   const LoginButton({
     Key? key,
     required this.password,
     required this.phoneNumber,
   }) : super(key: key);
 
-  final String phoneNumber;
-  final String password;
-
   @override
   State<LoginButton> createState() => _LoginButtonState();
 }
 
 class _LoginButtonState extends State<LoginButton> {
+  final storage = FlutterSecureStorage();
   bool _isLoading = false;
-  //! this is login func
-  Future<void> login(
-    number,
-    password,
-  ) async {
+//! this is login func
+  Future<dynamic> login(number, password) async {
     Map<String, String> data = {
       "username": number,
       "password": password,
     };
 
     // var jsonData = 0;
-    final storage = const FlutterSecureStorage();
 
-    var response =
-        await http.post(Uri.parse('http://54.226.160.184/user/login/'),
-            headers: {
-              // HttpHeaders.authorizationHeader: 'token',
-            },
-            body: data);
+    var response = await http.post(
+      Uri.parse('http://zune360.com/api/user/login/'),
+      body: data,
+    );
 
-    // end of loding..
+// end of loding..
 
     if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
-      var _token = jsonData["token"];
+      var _token = jsonData['token'];
       //local stroge save the token..
       await storage.write(
         key: 'token',
@@ -66,14 +60,13 @@ class _LoginButtonState extends State<LoginButton> {
               (route) => false);
         },
       );
-      // return 1;
     } else {
       setState(() {
         _isLoading = false;
       });
       showDialog(
         context: context,
-        builder: ((context) {
+        builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.red[100],
             content: Row(
@@ -100,12 +93,8 @@ class _LoginButtonState extends State<LoginButton> {
               ],
             ),
           );
-        }),
+        },
       );
-
-      print('Feild, try again');
-      print(" ${response.body}");
-      // return 0;
     }
   }
 
@@ -116,22 +105,15 @@ class _LoginButtonState extends State<LoginButton> {
         minimumSize: Size(MediaQuery.of(context).size.width / 1, 50),
         primary: const Color(0xFFD6001B),
       ),
-      //
-      //
-      //
-
-      onPressed: () async {
+      onPressed: () {
         setState(() {
           _isLoading = true;
         });
         login(
-          widget.phoneNumber,
-          widget.password,
+          widget.phoneNumber.toString(),
+          widget.password.toString(),
         );
       },
-      //
-      //
-      //
       child: _isLoading
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -157,7 +139,7 @@ class _LoginButtonState extends State<LoginButton> {
                 ),
               ],
             )
-          : Text(
+          : const Text(
               'LOGIN',
               style: TextStyle(
                 fontSize: 20,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/HomePage.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
-import 'package:wallets_app/Pages/Screen/notification.dart';
+import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
 import 'package:wallets_app/Pages/WelcomePage.dart';
 
 class PaymentConfirm extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallets_app/Pages/Screen/addFund.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
-import 'package:wallets_app/Pages/Screen/notification.dart';
+import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
 import 'package:wallets_app/Pages/Screen/otp_screen.dart';
 import '../gift_card.dart';
 
@@ -14,7 +14,7 @@ List<String> list = [
 
 class GiftCardFormPage extends StatefulWidget {
   final GiftCard _item;
-  GiftCardFormPage(this._item);
+  const GiftCardFormPage(this._item, {super.key});
   // const GiftCardFormPage({
   //   Key? key,
   // }) : super(key: key);
@@ -31,7 +31,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
   //
   String dropdownValue = list.first;
   int _pagestate = 0;
-  var _backGroundColor = Color(0xFFF4F8FB);
+  var _backGroundColor = const Color(0xFFF4F8FB);
 
   double pinYoffset = 0;
   double windowWidth = 0;
@@ -130,7 +130,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
         // Using Stack widget....(It is showing a PinScreen page....When click send button....)
         body: GestureDetector(
           onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
+            FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Stack(
             children: [
@@ -140,7 +140,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                 width: windowWidth,
                 color: _backGroundColor,
                 curve: Curves.fastLinearToSlowEaseIn,
-                duration: Duration(
+                duration: const Duration(
                   milliseconds: 1000,
                 ),
                 //ListView use kora hoyeche karon Page scroll korar jonno..
@@ -148,7 +148,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                   // ?
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 0),
+                      margin: const EdgeInsets.only(top: 0),
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -162,7 +162,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                   // alignment: Alignment.topLeft,
                                   height: 38,
                                   width: 38,
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                     left: 48,
                                     top: 12,
                                   ),
@@ -175,7 +175,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                   //   top: 7,
                                   //   left: 7,
                                   // ),
-                                  child: Padding(
+                                  child: const Padding(
                                     padding: EdgeInsets.only(left: 8),
                                     child: Icon(
                                       Icons.arrow_back_ios,
@@ -232,18 +232,18 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                       PageRouteBuilder(
                                         pageBuilder: (context, animation,
                                             secondaryAnimation) {
-                                          return AddFund();
+                                          return const AddFund();
                                         },
                                       ),
                                     );
                                   },
                                   child: SvgPicture.asset('images/tk.svg'),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
-                                  children: [
+                                  children: const [
                                     Text(
                                       '10,00,000 BDT',
                                       style: TextStyle(
@@ -265,13 +265,13 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 60,
                             ),
                             Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(left: 45),
+                                  margin: const EdgeInsets.only(left: 45),
                                   height: 80,
                                   width: 80,
                                   decoration: BoxDecoration(
@@ -279,7 +279,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                     color: Colors.white,
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Image.asset(
                                       widget._item.imgUrl,
 
@@ -288,10 +288,10 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                     left: 20,
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     "Gift Card",
                                     style: TextStyle(
                                       fontSize: 22,
@@ -305,56 +305,54 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                             //3TextField using
 
                             Container(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                 top: 50,
                                 left: 50,
                               ),
                               alignment: Alignment.centerLeft,
-                              child: Text('E-mail Address'),
+                              child: const Text('E-mail Address'),
                             ),
                             Form(
                               key: _formValue,
                               child: Padding(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                   top: 10,
                                   left: 50,
                                   right: 50,
                                 ),
-                                child: Container(
-                                  // height: 40,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.emailAddress,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(
-                                        vertical: 0.7,
-                                        horizontal: 13,
-                                      ),
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      filled: true,
-                                      hintText: widget._item.subtitle,
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                      ),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 0.7,
+                                      horizontal: 13,
                                     ),
-                                    validator: (value) {
-                                      RegExp('@');
-                                      if (value!.isEmpty) {
-                                        return "Enter your email";
-                                      }
-                                    },
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    filled: true,
+                                    hintText: widget._item.subtitle,
+                                    hintStyle: const TextStyle(
+                                      color: Colors.grey,
+                                    ),
                                   ),
+                                  validator: (value) {
+                                    RegExp('@');
+                                    if (value!.isEmpty) {
+                                      return "Enter your email";
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
 
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
@@ -362,7 +360,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                 GestureDetector(
                                   onTap: () {},
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 40),
+                                    margin: const EdgeInsets.only(left: 40),
                                     child: Checkbox(
                                       checkColor: Colors.white,
                                       fillColor:
@@ -383,26 +381,26 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                     // ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 0,
                                 ),
                                 Container(
                                   alignment: Alignment.centerLeft,
-                                  child: Text("Terms & Conditions"),
+                                  child: const Text("Terms & Conditions"),
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             Container(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                 bottom: 80,
                               ),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(windowWidth / 1.3, 50),
-                                  primary: Color(0xFFD6001B),
+                                  primary: const Color(0xFFD6001B),
                                 ),
                                 onPressed: () {
                                   if (_formValue.currentState!.validate()) {
@@ -426,59 +424,57 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                               borderRadius:
                                                   BorderRadius.circular(20.0),
                                             ),
-                                            contentPadding: EdgeInsets.only(
+                                            contentPadding:
+                                                const EdgeInsets.only(
                                               left: 50,
                                             ),
                                             alignment: Alignment.center,
-                                            title: Text(
+                                            title: const Text(
                                               'Terms & Conditions',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),
-                                            content: Container(
-                                              // color: Colors.green,
-                                              child: Row(
-                                                // mainAxisAlignment:
-                                                //     MainAxisAlignment
-                                                //         .spaceAround,
-                                                children: [
-                                                  // IconButton(
-                                                  //   onPressed: (() {}),
-                                                  //   icon: SvgPicture.asset(
-                                                  //     'assets/whatsApp.svg',
-                                                  //     // height: 30,
-                                                  //     color: Colors.green,
-                                                  //   ),
-                                                  //   // icon: Image.asset(
-                                                  //   //   'assets/Report.png',
-                                                  //   //   color: Colors.green,
-                                                  //   // ),
-                                                  // ),
-                                                  // SizedBox(
-                                                  //   width: 5,
-                                                  // ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      // launch(
-                                                      //   "https://www.whatsapp.com",
-                                                      // );
-                                                      // setState(() {
-                                                      //   // _launchURL();
-                                                      // });
-                                                    },
-                                                    child: Text(
-                                                      '',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
+                                            content: Row(
+                                              // mainAxisAlignment:
+                                              //     MainAxisAlignment
+                                              //         .spaceAround,
+                                              children: [
+                                                // IconButton(
+                                                //   onPressed: (() {}),
+                                                //   icon: SvgPicture.asset(
+                                                //     'assets/whatsApp.svg',
+                                                //     // height: 30,
+                                                //     color: Colors.green,
+                                                //   ),
+                                                //   // icon: Image.asset(
+                                                //   //   'assets/Report.png',
+                                                //   //   color: Colors.green,
+                                                //   // ),
+                                                // ),
+                                                // SizedBox(
+                                                //   width: 5,
+                                                // ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    // launch(
+                                                    //   "https://www.whatsapp.com",
+                                                    // );
+                                                    // setState(() {
+                                                    //   // _launchURL();
+                                                    // });
+                                                  },
+                                                  child: const Text(
+                                                    '',
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                             actions: [
                                               Row(
@@ -490,7 +486,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                                     onPressed: () {
                                                       Navigator.pop(context);
                                                     },
-                                                    child: Text(
+                                                    child: const Text(
                                                       'Cancel',
                                                       style: TextStyle(
                                                         fontSize: 15,
@@ -502,7 +498,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                                       // launch("https://www.whatsapp.com");
                                                       Navigator.pop(context);
                                                     },
-                                                    child: Text(
+                                                    child: const Text(
                                                       'Ok',
                                                       style: TextStyle(
                                                         fontSize: 15,
@@ -516,7 +512,6 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                         },
                                       );
                                     }
-                                    print('Done');
                                   }
 
                                   // Navigator.push(
@@ -528,7 +523,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                                   //   ),
                                   // );
                                 },
-                                child: Text(
+                                child: const Text(
                                   "Send",
                                   style: TextStyle(
                                     fontSize: 20,
@@ -584,12 +579,11 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                   setState(
                     () {
                       _pagestate = 0;
-                      print('OnClick');
                     },
                   );
                 },
                 child: AnimatedContainer(
-                  duration: Duration(
+                  duration: const Duration(
                     milliseconds: 0,
                   ),
                   curve: Curves.easeInOutExpo,
@@ -601,7 +595,7 @@ class _GiftCardFormPageState extends State<GiftCardFormPage> {
                   ),
 
                   //PinScreen Widgest.....
-                  child: OtpScreen(),
+                  child: const OtpScreen(),
                 ),
               ),
             ],

@@ -2,13 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/Screen/otp_screen.dart';
+import 'package:wallets_app/models/services/create_form.dart';
 import '../../Pages/Screen/addFund.dart';
 import '../../Pages/Screen/buttom_navigation.dart';
-import '../../Pages/Screen/notification.dart';
-import '../Bank.dart';
+import '../../Pages/Screen/notifiations/notification.dart';
+import 'package:http/http.dart' as http;
+
+import '../services/all_get_api.dart';
 
 class BankFormPage extends StatefulWidget {
-  final name, logo, type;
+  final String name, logo, type;
   const BankFormPage(
       {Key? key, required this.name, required this.logo, required this.type})
       : super(key: key);
@@ -19,13 +22,33 @@ class BankFormPage extends StatefulWidget {
 
 class _BankFormPageState extends State<BankFormPage> {
   bool isChecked = false;
-  //
+//? Creating the controller for textFormFeilds.
+  final _bankName = TextEditingController();
+  final _amount = TextEditingController();
+  final _bankAcountNumber = TextEditingController();
+  final _bankAcountName = TextEditingController();
+  final _branchName = TextEditingController();
+//?
+  Future<void> sendBankData(
+      bankName, amount, baNumber, baName, branchName, is_trem) async {
+    Map<String, String> data = {
+      "bank_name": bankName,
+      "amount": amount,
+      "bank_account_number": baNumber,
+      "bank_account_name": baName,
+      "branch_name": branchName,
+      "is_term": is_trem,
+    };
+    var responce = http.post(Uri.parse('http://zune360.com/request/banking/'),
+        headers: {}, body: data);
+    print(data);
+  }
+//?
+
   final _formValue = GlobalKey<FormState>();
   //
-  //
-
   int _pagestate = 0;
-  var _backGroundColor = Color(0xFFF4F8FB);
+  var _backGroundColor = const Color(0xFFF4F8FB);
 
   double pinYoffset = 0;
   double windowWidth = 0;
@@ -81,7 +104,7 @@ class _BankFormPageState extends State<BankFormPage> {
           backgroundColor: Colors.white,
           leadingWidth: 150,
           leading: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
                 Navigator.pushAndRemoveUntil(
@@ -100,7 +123,7 @@ class _BankFormPageState extends State<BankFormPage> {
           ),
           actions: [
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 4,
               ),
               child: IconButton(
@@ -137,7 +160,7 @@ class _BankFormPageState extends State<BankFormPage> {
                   width: windowWidth,
                   color: _backGroundColor,
                   curve: Curves.fastLinearToSlowEaseIn,
-                  duration: Duration(
+                  duration: const Duration(
                     milliseconds: 1000,
                   ),
                   child: ListView(
@@ -150,7 +173,7 @@ class _BankFormPageState extends State<BankFormPage> {
                             // alignment: Alignment.topLeft,
                             height: 38,
                             width: 38,
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                               left: 48,
                               top: 12,
                             ),
@@ -163,7 +186,7 @@ class _BankFormPageState extends State<BankFormPage> {
                             //   top: 7,
                             //   left: 7,
                             // ),
-                            child: Padding(
+                            child: const Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Icon(
                                 Icons.arrow_back_ios,
@@ -188,7 +211,7 @@ class _BankFormPageState extends State<BankFormPage> {
                       ),
                       //end of back button....
                       Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             // top: 60,
                             ),
                         child: Center(
@@ -204,24 +227,33 @@ class _BankFormPageState extends State<BankFormPage> {
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
                                               secondaryAnimation) {
-                                            return AddFund();
+                                            return const AddFund();
                                           },
                                         ),
                                       );
                                     },
                                     child: SvgPicture.asset('images/tk.svg'),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Column(
                                     children: [
-                                      Text(
-                                        '10,00,000 BDT',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      FutureBuilder<int>(
+                                        future: getBalance(
+                                            "http://zune360.com/api/user/current_balance/"),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            return Text(
+                                              snapshot.data.toString(),
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            );
+                                          }
+                                          return const Text('');
+                                        },
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -237,15 +269,15 @@ class _BankFormPageState extends State<BankFormPage> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 40,
                               ),
                               Row(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: 45),
-                                    height: 70,
-                                    width: 70,
+                                    margin: const EdgeInsets.only(left: 45),
+                                    height: 95,
+                                    width: 95,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
                                       color: Colors.white,
@@ -257,12 +289,12 @@ class _BankFormPageState extends State<BankFormPage> {
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                       left: 20,
                                     ),
                                     child: Text(
                                       widget.type,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -270,16 +302,16 @@ class _BankFormPageState extends State<BankFormPage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   bottom: 10,
                                 ),
                                 alignment: Alignment.centerLeft,
-                                child: Text(
+                                child: const Text(
                                   'Bank Name',
                                   style: TextStyle(
                                     fontSize: 15,
@@ -288,45 +320,31 @@ class _BankFormPageState extends State<BankFormPage> {
                               ),
                               Container(
                                 // height: 48,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   right: 48,
                                 ),
-                                child: TextFormField(
+                                child: CreateFormFeild(
+                                  hint: "Enter Bank Name",
+                                  kytype: TextInputType.multiline,
+                                  controller: _bankName,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter some text';
+                                      return 'Please enter your bank name';
                                     }
                                   },
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 0.4,
-                                      horizontal: 13,
-                                    ),
-                                    fillColor: Color(0xFFEFF0F1),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    hintText: widget.name,
-                                    hintStyle: TextStyle(
-                                      color: Colors.black54,
-                                    ),
-                                  ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   bottom: 10,
                                 ),
                                 alignment: Alignment.centerLeft,
-                                child: Text(
+                                child: const Text(
                                   'Account Number',
                                   style: TextStyle(
                                     fontSize: 15,
@@ -335,45 +353,31 @@ class _BankFormPageState extends State<BankFormPage> {
                               ),
                               Container(
                                 // height: 48,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   right: 48,
                                 ),
-                                child: TextFormField(
+                                child: CreateFormFeild(
+                                  hint: "Enter Accoount Number",
+                                  kytype: TextInputType.number,
+                                  controller: _bankAcountNumber,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter some number';
+                                      return 'Please enter your account number';
                                     }
                                   },
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 0.4,
-                                      horizontal: 13,
-                                    ),
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    hintText: "Enter Account Number",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   bottom: 10,
                                 ),
                                 alignment: Alignment.centerLeft,
-                                child: Text(
+                                child: const Text(
                                   'Account Name',
                                   style: TextStyle(
                                     fontSize: 15,
@@ -382,45 +386,31 @@ class _BankFormPageState extends State<BankFormPage> {
                               ),
                               Container(
                                 // height: 48,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   right: 48,
                                 ),
-                                child: TextFormField(
+                                child: CreateFormFeild(
+                                  hint: "Enter Accoount Name",
+                                  kytype: TextInputType.multiline,
+                                  controller: _bankAcountName,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter some text';
+                                      return 'Please enter your account name';
                                     }
                                   },
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 0.4,
-                                      horizontal: 13,
-                                    ),
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    hintText: "Enter Account Name",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   bottom: 10,
                                 ),
                                 alignment: Alignment.centerLeft,
-                                child: Text(
+                                child: const Text(
                                   'Branch Name',
                                   style: TextStyle(
                                     fontSize: 15,
@@ -429,83 +419,49 @@ class _BankFormPageState extends State<BankFormPage> {
                               ),
                               Container(
                                 // height: 48,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   right: 48,
                                 ),
-                                child: TextFormField(
+                                child: CreateFormFeild(
+                                  hint: "Enter Branch Name",
+                                  kytype: TextInputType.multiline,
+                                  controller: _branchName,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter some text';
+                                      return 'Please enter your branch name';
                                     }
                                   },
-                                  keyboardType: TextInputType.multiline,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 0.4,
-                                      horizontal: 13,
-                                    ),
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    hintText: "Enter Branch Name",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   bottom: 10,
                                 ),
                                 alignment: Alignment.centerLeft,
-                                // child: Text(
-                                //   'Bank Name',
-                                //   style: TextStyle(
-                                //     fontSize: 15,
-                                //   ),
-                                // ),
                               ),
                               Container(
                                 // height: 48,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   left: 48,
                                   right: 48,
                                 ),
-                                child: TextFormField(
+                                child: CreateFormFeild(
+                                  hint: "Amount",
+                                  kytype: TextInputType.number,
+                                  controller: _amount,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter some number';
+                                      return 'Please enter your amount';
                                     }
                                   },
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                      vertical: 0.4,
-                                      horizontal: 13,
-                                    ),
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    filled: true,
-                                    hintText: "Amount",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -513,7 +469,7 @@ class _BankFormPageState extends State<BankFormPage> {
                                   GestureDetector(
                                     onTap: () {},
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 40),
+                                      margin: const EdgeInsets.only(left: 40),
                                       child: Checkbox(
                                         checkColor: Colors.white,
                                         fillColor:
@@ -534,30 +490,40 @@ class _BankFormPageState extends State<BankFormPage> {
                                       // ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 0,
                                   ),
                                   Container(
                                     alignment: Alignment.centerLeft,
-                                    child: Text("Terms & Conditions"),
+                                    child: const Text("Terms & Conditions"),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                   bottom: 80,
                                 ),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: Size(windowWidth * 0.77, 50),
-                                    primary: Color(0xFFD6001B),
+                                    primary: const Color(0xFFD6001B),
                                   ),
                                   onPressed: () {
                                     if (_formValue.currentState!.validate()) {
                                       if (isChecked) {
+//?
+                                        sendBankData(
+                                          _bankName.text,
+                                          _amount.text,
+                                          _bankAcountNumber.text,
+                                          _bankAcountName.text,
+                                          _branchName.text,
+                                          isChecked.toString(),
+                                        );
+//?
                                         setState(
                                           () {
                                             // _pagestate = 1;
@@ -577,11 +543,12 @@ class _BankFormPageState extends State<BankFormPage> {
                                                 borderRadius:
                                                     BorderRadius.circular(20.0),
                                               ),
-                                              contentPadding: EdgeInsets.only(
+                                              contentPadding:
+                                                  const EdgeInsets.only(
                                                 left: 50,
                                               ),
                                               alignment: Alignment.center,
-                                              title: Text(
+                                              title: const Text(
                                                 'Terms & Conditions',
                                                 style: TextStyle(
                                                   color: Colors.black,
@@ -589,37 +556,11 @@ class _BankFormPageState extends State<BankFormPage> {
                                                 ),
                                               ),
                                               content: Container(
-                                                // color: Colors.green,
                                                 child: Row(
-                                                  // mainAxisAlignment:
-                                                  //     MainAxisAlignment
-                                                  //         .spaceAround,
                                                   children: [
-                                                    // IconButton(
-                                                    //   onPressed: (() {}),
-                                                    //   icon: SvgPicture.asset(
-                                                    //     'assets/whatsApp.svg',
-                                                    //     // height: 30,
-                                                    //     color: Colors.green,
-                                                    //   ),
-                                                    //   // icon: Image.asset(
-                                                    //   //   'assets/Report.png',
-                                                    //   //   color: Colors.green,
-                                                    //   // ),
-                                                    // ),
-                                                    // SizedBox(
-                                                    //   width: 5,
-                                                    // ),
                                                     InkWell(
-                                                      onTap: () {
-                                                        // launch(
-                                                        //   "https://www.whatsapp.com",
-                                                        // );
-                                                        // setState(() {
-                                                        //   // _launchURL();
-                                                        // });
-                                                      },
-                                                      child: Text(
+                                                      onTap: () {},
+                                                      child: const Text(
                                                         '',
                                                         style: TextStyle(
                                                           color: Colors.black,
@@ -641,7 +582,7 @@ class _BankFormPageState extends State<BankFormPage> {
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Cancel',
                                                         style: TextStyle(
                                                           fontSize: 15,
@@ -650,10 +591,9 @@ class _BankFormPageState extends State<BankFormPage> {
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
-                                                        // launch("https://www.whatsapp.com");
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Ok',
                                                         style: TextStyle(
                                                           fontSize: 15,
@@ -669,17 +609,8 @@ class _BankFormPageState extends State<BankFormPage> {
                                       }
                                       print('Done');
                                     }
-
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (ctx) {
-                                    //       return PaymentConfirm();
-                                    //     },
-                                    //   ),
-                                    // );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Send",
                                     style: TextStyle(
                                       fontSize: 20,
@@ -706,7 +637,7 @@ class _BankFormPageState extends State<BankFormPage> {
                     );
                   },
                   child: AnimatedContainer(
-                    duration: Duration(
+                    duration: const Duration(
                       milliseconds: 0,
                     ),
                     curve: Curves.easeInOutExpo,
@@ -718,7 +649,7 @@ class _BankFormPageState extends State<BankFormPage> {
                     ),
 
                     //PinScreen Widgest.....
-                    child: OtpScreen(),
+                    child: const OtpScreen(),
                   ),
                 ),
               ],

@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/LoginPage.dart';
 
 // import 'Screen/buttom_navigation.dart';
 // import 'Screen/otp_screen.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+class WelcomePage extends StatelessWidget {
+  WelcomePage({Key? key}) : super(key: key);
 
-  @override
-  State<WelcomePage> createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
-  //
-  //
-  //
   //
   double _pinYoffset = 0;
+
   double _pinOpacity = 1;
+
   int _pageState = 0;
+
   var _backGroundColor = Color(0xFFD6001B);
+
   double height = 0;
+
   double width = 0;
+
   bool _obscureText = true;
-  //
-  //
+
   //
   @override
   Widget build(BuildContext context) {
@@ -126,17 +124,17 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => const LoginPage(),
+                    pageBuilder: (_, __, ___) => LoginPage(),
                     transitionDuration: Duration(seconds: 0),
                     transitionsBuilder: (_, a, __, c) =>
                         FadeTransition(opacity: a, child: c),
                   ),
                 );
               },
-              child: const Text(
+              child: Text(
                 'LOGIN',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFFD6001B),
                 ),
@@ -158,15 +156,15 @@ class _WelcomePageState extends State<WelcomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Language',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 13.sp,
                       color: Colors.white,
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 10.w,
                   ),
                   Container(
                     // margin: EdgeInsets.only(),
@@ -185,10 +183,10 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         'English',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: TextStyle(
+                          fontSize: 16.sp,
                           color: Colors.white,
                         ),
                       ),
