@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
@@ -20,6 +23,7 @@ class MobileBankingFormPage extends StatefulWidget {
 }
 
 class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
+  final storge = const FlutterSecureStorage();
 //? Set Controller..
   final _sugestionfieldController = TextEditingController();
   final _amount = TextEditingController();
@@ -34,17 +38,27 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
     amount,
     is_trem,
     choise,
+    mbName,
   ) async {
     Map<String, String> data = {
       "phone_number": number,
       "amount": amount,
       "is_term": is_trem,
       "choice": choise,
+      "bank_name": mbName,
     };
-    var responce = http.post(
-        Uri.parse('http://zune360.com/request/mobilebanking/'),
-        headers: {},
-        body: data);
+    var showToken = await storge.read(key: 'token');
+    var responce =
+        await http.post(Uri.parse('http://zune360.com/request/mobilebanking/'),
+            headers: {
+              HttpHeaders.authorizationHeader: "token $showToken",
+            },
+            body: data);
+    if (responce.statusCode == 200) {
+      print(data);
+    } else {
+      print('not Ok');
+    }
   }
 
 //!
@@ -485,6 +499,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                           _amount.text,
                                           isChecked.toString(),
                                           value,
+                                          widget.name,
                                         );
 //?
 //!Page change ..
@@ -623,7 +638,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                     color: Colors.white.withOpacity(_pinOpaity),
                   ),
 //?PinScreen Widgest.....
-                  child: const OtpScreen(),
+                  child: OtpScreen(),
                 ),
               ),
             ],

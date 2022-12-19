@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:wallets_app/Pages/Screen/payment_confirm.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends StatelessWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
-  @override
-  State<OtpScreen> createState() => _OtpScreenState();
-}
+  // final _formValue = GlobalKey<FormState>();
 
-class _OtpScreenState extends State<OtpScreen> {
-  final _formValue = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -34,9 +29,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   padding: const EdgeInsets.all(50),
                   child: OTPTextField(
                     otpFieldStyle: OtpFieldStyle(
-                      borderColor: Color(0xFFD6D6D6),
+                      borderColor: const Color(0xFFD6D6D6),
                       // borderColor: Colors.white,
-                      backgroundColor: Color(0xFFD6D6D6),
+                      backgroundColor: const Color(0xFFD6D6D6),
                       focusBorderColor: Colors.grey,
                     ),
                     // outlineBorderRadius: ,
@@ -45,13 +40,13 @@ class _OtpScreenState extends State<OtpScreen> {
                     width: MediaQuery.of(context).size.width,
                     fieldWidth: 45,
                     fieldStyle: FieldStyle.box,
-                    onChanged: (pin) {
-                      print("Changed: " + pin);
-                    },
-                    onCompleted: (pin) {
-                      print("Completed: " + pin);
-                    },
-                    style: TextStyle(
+                    // onChanged: (pin) {
+                    //   print("Changed: " + pin);
+                    // },
+                    // onCompleted: (pin) {
+                    //   print("Completed: " + pin);
+                    // },
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -67,7 +62,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(width / 1.33, 60),
-                      primary: Color(0xFFD6001B),
+                      backgroundColor: const Color(0xFFD6001B),
                     ),
                     onPressed: () {
                       Navigator.pushReplacement(

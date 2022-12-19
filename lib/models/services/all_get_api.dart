@@ -37,7 +37,7 @@ Future<int> getBalance(String url) async {
   );
   int value = jsonDecode(responce.body.toString());
   if (responce.statusCode == 200) {
-    print('this is response $value');
+    // print('this is response $value');
     return value;
   } else {
     return 0;

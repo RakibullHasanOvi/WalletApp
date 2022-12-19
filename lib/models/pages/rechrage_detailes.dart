@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wallets_app/Pages/Screen/addFund.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
@@ -24,29 +27,33 @@ class RechargeFormPage extends StatefulWidget {
 
 class _RechargeFormPageState extends State<RechargeFormPage> {
 //
+  final stroge = FlutterSecureStorage();
   final _formValue = GlobalKey<FormState>();
   bool isChecked = false;
   String value = '';
   final _sugestionfieldController = TextEditingController();
   final _amount = TextEditingController();
 //? Send Mobile Recharge data..
-  Future<void> sendRechargeData(
-    number,
-    amount,
-    is_trem,
-    choise,
-  ) async {
+  Future<void> sendRechargeData(number, amount, is_trem, choise) async {
     Map<String, String> data = {
       "phone_number": number,
       "amount": amount,
       "is_term": is_trem,
       "choice": choise,
     };
-    var responce = http.post(
-        Uri.parse('http://zune360.com/request/mobilebanking/'),
-        headers: {},
-        body: data);
+    var showToken = await stroge.read(key: 'token');
+    var responce =
+        await http.post(Uri.parse('http://zune360.com/request/mobilercharge/'),
+            headers: {
+              HttpHeaders.authorizationHeader: "token $showToken",
+            },
+            body: data);
     print(data);
+    if (responce.statusCode == 200) {
+      print('Success');
+    } else {
+      print('Check it some problem');
+    }
   }
 //?
 
@@ -405,12 +412,12 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                                           ),
                                           items: const [
                                             DropdownMenuItem<String>(
-                                              value: 'Personal',
-                                              child: Text('Personal'),
+                                              value: 'Prepaid',
+                                              child: Text('Prepaid'),
                                             ),
                                             DropdownMenuItem<String>(
-                                              value: 'Agent',
-                                              child: Text('Agent'),
+                                              value: 'Postpaid',
+                                              child: Text('Postpaid'),
                                             ),
                                           ],
                                           onChanged: (_value) {
@@ -476,10 +483,6 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                                             );
                                           },
                                         ),
-                                        // child: Image.asset('assets/Group 147.png'),
-                                        // child: Icon(
-                                        //   Icons.check_box,
-                                        // ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -497,7 +500,7 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: Size(width / 1.3, 50),
-                                    primary: const Color(0xFFD6001B),
+                                    backgroundColor: const Color(0xFFD6001B),
                                   ),
                                   onPressed: () {
                                     if (_formValue.currentState!.validate()) {
@@ -515,13 +518,9 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
 //?
                                           setState(
                                             () {
-                                              // _pagestate = 1;
                                               if (_pageState == 0) {
                                                 _pageState = 1;
                                               }
-                                              // else {
-                                              //   _pagestate = 0;
-                                              // }
                                             },
                                           );
                                           print("Okay");
@@ -628,7 +627,6 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                   setState(
                     () {
                       _pageState = 0;
-                      print('HoyeGeche');
                     },
                   );
                 },
@@ -639,7 +637,7 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                   ),
                   color: Colors.white.withOpacity(_pinOpacity),
                   transform: Matrix4.translationValues(0, _pinYoffset, 0),
-                  child: const OtpScreen(),
+                  child: OtpScreen(),
                 ),
               ),
             ],

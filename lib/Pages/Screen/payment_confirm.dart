@@ -5,14 +5,9 @@ import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
 import 'package:wallets_app/Pages/WelcomePage.dart';
 
-class PaymentConfirm extends StatefulWidget {
+class PaymentConfirm extends StatelessWidget {
   const PaymentConfirm({Key? key}) : super(key: key);
 
-  @override
-  State<PaymentConfirm> createState() => _PaymentConfirmState();
-}
-
-class _PaymentConfirmState extends State<PaymentConfirm> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -20,14 +15,12 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFF4F8FB),
-        // backgroundColor: Colors.blue[50],
-        // backgroundColor: Colors.blue[50].withOpacity(col),
         appBar: AppBar(
           elevation: 0.3,
           backgroundColor: Colors.white,
           leadingWidth: 200,
           leading: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -44,21 +37,9 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
               // child: Image.asset('assets/Group 255.png'),
             ),
           ),
-          // title: Container(
-          //   alignment: Alignment.centerLeft,
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(builder: (context) => WelcomePage()),
-          //       );
-          //     },
-          //     child: Image.asset('assets/Group 255.png'),
-          //   ),
-          // ),
           actions: [
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   // right: 4,
                   ),
               child: IconButton(
@@ -95,7 +76,7 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
                           width: 10,
                         ),
                         Column(
-                          children: [
+                          children: const [
                             Text(
                               '10,00,000 BDT',
                               style: TextStyle(
@@ -137,7 +118,7 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
               width: width,
               // color: Color(0xFFD6001B),
               transform: Matrix4.translationValues(0, 150, 0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFFD6001B),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50),
@@ -148,7 +129,7 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: 100,
                     ),
                     child: Image.asset(
@@ -233,7 +214,6 @@ class _PaymentConfirmState extends State<PaymentConfirm> {
     );
   }
 }
-
 
 // Flexible(
 //                       child: Container(
