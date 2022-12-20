@@ -28,8 +28,8 @@ class BankingItems extends StatelessWidget {
             physics: const ScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
             ),
             itemBuilder: (context, dynamic index) {
               return InkWell(

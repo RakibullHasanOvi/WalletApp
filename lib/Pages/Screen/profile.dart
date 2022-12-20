@@ -8,6 +8,8 @@ import 'package:wallets_app/Pages/Screen/change_pin.dart';
 import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
 import 'package:wallets_app/Pages/Screen/support.dart';
 import 'package:http/http.dart' as http;
+import 'package:wallets_app/Pages/Screen/widgets/c_widgets.dart';
+import 'package:wallets_app/Pages/Screen/widgets/card_widgets.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -27,32 +29,23 @@ class _ProfilePageState extends State<ProfilePage> {
     return SafeArea(
       top: false,
       child: Scaffold(
-        backgroundColor: Color(0xFFF4F8FB),
-
-        // This is AppBar
-
+        backgroundColor: const Color(0xFFF4F8FB),
+// This is AppBar
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
           leadingWidth: 150,
           leading: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => WelcomePage()),
-                // );
-              },
+              onTap: () {},
               child: SvgPicture.asset('assets/wallet_logo.svg'),
             ),
           ),
-
-          //This is Notification Icon
-
+//This is Notification Icon
           actions: [
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 4,
               ),
               child: IconButton(
@@ -62,13 +55,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 22,
                 ),
                 onPressed: () {
-                  // sending to notification page using (PageRouteBuilder)
-
+// sending to notification page using (PageRouteBuilder)
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => NotificationPage(),
-                      transitionDuration: Duration(seconds: 0),
+                      pageBuilder: (_, __, ___) => const NotificationPage(),
+                      transitionDuration: const Duration(seconds: 0),
                       transitionsBuilder: (_, a, __, c) =>
                           FadeTransition(opacity: a, child: c),
                     ),
@@ -80,10 +72,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
 
         body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 8),
+              margin: const EdgeInsets.only(top: 8),
               height: 90,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -93,51 +84,46 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.grey.withOpacity(0.4),
                     // spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 2), // changes position of shadow
+                    offset: const Offset(0, 2), // changes position of shadow
                   ),
                 ],
-                // border: Border(
-                //   bottom: BorderSide(
-                //     width: 1.0,
-                //     color: Colors.grey,
-                //   ),
-                // ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: 10,
                       left: 30,
                     ),
-                    child: Text(
-                      'RohimulKarimKhondokarForhad',
+                    child: const Text(
+                      'Zulfikar Ali Sumon',
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: 10,
                       left: 30,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Customer ID',
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 12,
                         color: Colors.grey,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 30),
-                    child: Text(
+                    margin: const EdgeInsets.only(left: 30),
+                    child: const Text(
                       '15994512',
                       style: TextStyle(
                         fontSize: 15,
@@ -170,456 +156,98 @@ class _ProfilePageState extends State<ProfilePage> {
                       offset: const Offset(0, 2), // changes position of shadow
                     ),
                   ],
-                  // border: Border(
-                  //   bottom: BorderSide(
-                  //     width: 1.0,
-                  //     color: Colors.grey,
-                  //   ),
-                  // ),
                 ),
                 child: Column(
                   children: [
-                    //
-//Offer
-                    GestureDetector(
+                    CardWidgets(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: ((context) {
-                        //       return const ContactPage();
-                        //     }),
-                        //   ),
-                        // );
+                        print("offer");
                       },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: 30,
-                          left: 30,
-                          right: 30,
-                        ),
-                        child: Container(
-                          height: 60,
-                          width: 350,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                // spreadRadius: 5,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              ),
-                            ],
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // Image.asset("assets/singout_logo.png"),
-                                    Icon(
-                                      Icons.local_offer,
-                                      color: Color(0xFFD6001B),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Offer',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      icon: Icons.local_offer,
+                      label: "Offer",
                     ),
-
-                    // Add found.............
-                    SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
+// Add found.............
+                    CardWidgets(
                       onTap: () {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (_, __, ___) => const AddFund(),
-                            transitionDuration: Duration(seconds: 0),
+                            transitionDuration: const Duration(seconds: 0),
                             transitionsBuilder: (_, a, __, c) =>
                                 FadeTransition(opacity: a, child: c),
                           ),
                         );
                       },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          // top: 30,
-                          left: 30,
-                          right: 30,
-                        ),
-                        child: Container(
-                          height: 60,
-                          width: 350,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                // spreadRadius: 5,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              ),
-                            ],
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.addchart_outlined,
-                                      color: Color(0xFFD6001B),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Add Fund',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      icon: Icons.addchart_outlined,
+                      label: "Add Fund",
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    // Change pin..........
-
-                    GestureDetector(
+// Change pin..........
+                    CardWidgets(
                       onTap: () {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
                             pageBuilder: (_, __, ___) =>
                                 const ChangePinScreen(),
-                            transitionDuration: Duration(seconds: 0),
+                            transitionDuration: const Duration(seconds: 0),
                             transitionsBuilder: (_, a, __, c) =>
                                 FadeTransition(opacity: a, child: c),
                           ),
                         );
                       },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          // top: 30,
-                          left: 30,
-                          right: 30,
-                        ),
-                        child: Container(
-                          height: 60,
-                          width: 350,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                // spreadRadius: 5,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              ),
-                            ],
-                            color: Colors.white,
+                      icon: Icons.change_circle_rounded,
+                      label: "Change Pin",
+                    ),
+//Terms ans Conditions..........
+                    CardWidgets(
+                      onTap: () {},
+                      icon: Icons.contact_support,
+                      label: "Terms and Conditions",
+                    ),
+//Support...............
+                    CwidgetsTwo(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => const SupportScreen(),
+                            transitionDuration: const Duration(seconds: 0),
+                            transitionsBuilder: (_, a, __, c) =>
+                                FadeTransition(opacity: a, child: c),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.change_circle_rounded,
-                                      color: Color(0xFFD6001B),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Chnage Pin',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                        );
+                      },
+                      image: SvgPicture.asset("assets/support.svg"),
+                      label: "Support",
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    //Terms ans Conditions..........
-
-                    Padding(
-                      padding: EdgeInsets.only(
-                        // top: 30,
-                        left: 30,
-                        right: 30,
-                      ),
-                      child: Container(
-                        height: 60,
-                        width: 350,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              // spreadRadius: 5,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 2), // changes position of shadow
-                            ),
-                          ],
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: 20,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.contact_support_rounded,
-                                    color: Color(0xFFD6001B),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Text(
-                                      'Terms and Conditions',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-
-                    //Support...............
-
-                    Padding(
-                      padding: EdgeInsets.only(
-                        // top: 30,
-                        left: 30,
-                        right: 30,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (_, __, ___) =>
-                                  const SupportScreen(),
-                              transitionDuration: Duration(seconds: 0),
-                              transitionsBuilder: (_, a, __, c) =>
-                                  FadeTransition(opacity: a, child: c),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 60,
-                          width: 350,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                // spreadRadius: 5,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              ),
-                            ],
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset("assets/support.svg"),
-                                    //  Icon(
-                                    //   Icons.support_agent_outlined,
-                                    //   color: Color(0xFFD6001B),
-                                    // ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Support',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-
 //! Sing Out.........
+                    CwidgetsTwo(
+                      onTap: () async {
+                        var _token = await storage.read(key: "token");
+                        print(_token);
+                        var response = await http.post(
+                            Uri.parse('http://54.226.160.184/user/logout/'),
+                            headers: {
+                              HttpHeaders.authorizationHeader: 'token $_token',
+                            });
+                        print(response.statusCode);
 
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        // top: 30,
-                        left: 30,
-                        right: 30,
-                      ),
-                      child: GestureDetector(
-                        onTap: () async {
-                          var _token = await storage.read(key: "token");
-                          print(_token);
-                          var response = await http.post(
-                              Uri.parse('http://54.226.160.184/user/logout/'),
-                              headers: {
-                                HttpHeaders.authorizationHeader:
-                                    'token ${_token}',
-                              });
-                          print(response.statusCode);
-
-                          if (response.statusCode == 200) {
-                            print('Logout done.');
-                            await storage.delete(key: "token");
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (_, __, ___) => LoginPage(),
-                                ),
-                                (route) => false);
-                          } else {
-                            print('error');
-                          }
-                        },
-                        // print('Logout done.');
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     PageRouteBuilder(
-                        //       pageBuilder: (_, __, ___) => const LoginPage(),
-                        //     ),
-                        //     (route) => false);
-
-                        child: Container(
-                          height: 60,
-                          width: 350,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                // spreadRadius: 5,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
+                        if (response.statusCode == 200) {
+                          print('Logout done.');
+                          await storage.delete(key: "token");
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (_, __, ___) => const LoginPage(),
                               ),
-                            ],
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset("assets/singout.svg"),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Signout',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
+                              (route) => false);
+                        } else {
+                          print('error');
+                        }
+                      },
+                      image: SvgPicture.asset("assets/singout.svg"),
+                      label: "Signout",
                     ),
                   ],
                 ),
@@ -631,8 +259,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-/*
-
-
-*/

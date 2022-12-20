@@ -34,12 +34,15 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
   final _sugestionfieldController = TextEditingController();
   final _amount = TextEditingController();
 //? Send Mobile Recharge data..
-  Future<void> sendRechargeData(number, amount, is_trem, choise) async {
+  Future<void> sendRechargeData(
+      number, amount, is_trem, choise, mrName, addLogo) async {
     Map<String, String> data = {
       "phone_number": number,
       "amount": amount,
       "is_term": is_trem,
       "choice": choise,
+      "bank_name": mrName,
+      "add_logo": addLogo,
     };
     var showToken = await stroge.read(key: 'token');
     var responce =
@@ -244,7 +247,8 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                                           builder: (context, snapshot) {
                                             if (snapshot.hasData) {
                                               return Text(
-                                                snapshot.data.toString(),
+                                                '\৳ ' +
+                                                    snapshot.data.toString(),
                                                 style: const TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -514,6 +518,8 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                                             _amount.text,
                                             isChecked.toString(),
                                             value,
+                                            widget.name,
+                                            widget.logo,
                                           );
 //?
                                           setState(

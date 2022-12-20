@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,18 +33,14 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
 
 //!
   Future<void> sendData(
-    number,
-    amount,
-    is_trem,
-    choise,
-    mbName,
-  ) async {
+      number, amount, is_trem, choise, mbName, addLogo) async {
     Map<String, String> data = {
       "phone_number": number,
       "amount": amount,
       "is_term": is_trem,
       "choice": choise,
       "bank_name": mbName,
+      "add_logo": addLogo,
     };
     var showToken = await storge.read(key: 'token');
     var responce =
@@ -252,7 +247,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
                                             return Text(
-                                              snapshot.data.toString(),
+                                              '\৳ ' + snapshot.data.toString(),
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -500,6 +495,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                           isChecked.toString(),
                                           value,
                                           widget.name,
+                                          widget.logo,
                                         );
 //?
 //!Page change ..

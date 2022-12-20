@@ -34,7 +34,7 @@ class _BankFormPageState extends State<BankFormPage> {
   final _branchName = TextEditingController();
 //?
   Future<void> sendBankData(
-      bankName, amount, baNumber, baName, branchName, is_trem) async {
+      bankName, amount, baNumber, baName, branchName, is_trem, addLogo) async {
     Map<String, String> data = {
       "bank_name": bankName,
       "amount": amount,
@@ -42,6 +42,7 @@ class _BankFormPageState extends State<BankFormPage> {
       "bank_account_name": baName,
       "branch_name": branchName,
       "is_term": is_trem,
+      "add_logo": addLogo,
     };
     var showToken = await stroge.read(key: 'token');
     var responce =
@@ -256,7 +257,7 @@ class _BankFormPageState extends State<BankFormPage> {
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
                                             return Text(
-                                              snapshot.data.toString(),
+                                              '\৳ ' + snapshot.data.toString(),
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -539,6 +540,7 @@ class _BankFormPageState extends State<BankFormPage> {
                                           _bankAcountName.text,
                                           _branchName.text,
                                           isChecked.toString(),
+                                          widget.logo,
                                         );
 //?
                                         setState(

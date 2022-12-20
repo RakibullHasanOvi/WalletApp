@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final storage = const FlutterSecureStorage();
+    final storage = FlutterSecureStorage();
     _Storage() async {
       var salarput = await storage.read(key: 'token');
       print(salarput);
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     return Text(
-                                      snapshot.data.toString(),
+                                      '\৳ ' + snapshot.data.toString(),
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
