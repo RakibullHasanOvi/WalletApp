@@ -4,14 +4,7 @@ import 'package:wallets_app/Pages/HomePage.dart';
 import 'package:wallets_app/Pages/Screen/+in_page.dart';
 import 'package:wallets_app/Pages/Screen/-out_page%20.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
-
-import '../WelcomePage.dart';
 import 'notifiations/notification.dart';
-// import 'package:wallet_app/Pages/Screen/+in_page.dart';
-// import 'package:wallet_app/Pages/Screen/-out_page.dart';
-// import 'package:wallet_app/Pages/WelcomePage.dart';
-// import 'package:wallet_app/models/pages/mbdatailes.dart';
-// import 'package:wallet_app/models/pages/mb_items.dart';
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen({Key? key}) : super(key: key);
@@ -27,15 +20,14 @@ class _ReportScreenState extends State<ReportScreen>
     TabController _tabController = TabController(length: 2, vsync: this);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFF4F8FB),
-        // backgroundColor: Colors.blue[50],
+        backgroundColor: const Color(0xFFF4F8FB),
         appBar: AppBar(
           centerTitle: false,
           elevation: 0,
           backgroundColor: Colors.white,
           leadingWidth: 150,
           leading: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
               onTap: () {
                 // Navigator.push(
@@ -60,7 +52,7 @@ class _ReportScreenState extends State<ReportScreen>
           // ),
           actions: [
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 right: 4,
               ),
               child: IconButton(
@@ -73,8 +65,8 @@ class _ReportScreenState extends State<ReportScreen>
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => NotificationPage(),
-                      transitionDuration: Duration(seconds: 0),
+                      pageBuilder: (_, __, ___) => const NotificationPage(),
+                      transitionDuration: const Duration(seconds: 0),
                       transitionsBuilder: (_, a, __, c) =>
                           FadeTransition(opacity: a, child: c),
                     ),
@@ -84,18 +76,6 @@ class _ReportScreenState extends State<ReportScreen>
             ),
           ],
         ),
-        // body: Container(
-        //   height: 40,
-        //   width: 40,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.circular(8),
-        //     color: Colors.black,
-        //   ),
-        //   margin: EdgeInsets.only(
-        //     top: 20,
-        //     left: 20,
-        //   ),
-        // child:
         body: ListView(
           children: [
             Container(
@@ -106,7 +86,7 @@ class _ReportScreenState extends State<ReportScreen>
                     child: Container(
                       height: 40,
                       width: 40,
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                         left: 30,
                         top: 30,
                       ),
@@ -118,7 +98,7 @@ class _ReportScreenState extends State<ReportScreen>
                       //   top: 7,
                       //   left: 7,
                       // ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back_ios_rounded,
                         color: Colors.white,
                         // size: 10,
@@ -128,20 +108,20 @@ class _ReportScreenState extends State<ReportScreen>
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => BottomNavigation(),
-                          transitionDuration: Duration(seconds: 0),
+                          pageBuilder: (_, __, ___) => const BottomNavigation(),
+                          transitionDuration: const Duration(seconds: 0),
                           transitionsBuilder: (_, a, __, c) =>
                               FadeTransition(opacity: a, child: c),
                         ),
                       );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 50,
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 27),
-                    child: Text(
+                    margin: const EdgeInsets.only(top: 27),
+                    child: const Text(
                       'WEEKLY REPORT',
                       style: TextStyle(
                         letterSpacing: 2,
@@ -153,13 +133,13 @@ class _ReportScreenState extends State<ReportScreen>
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               child: Container(
-                color: Color(0xFFF8F8F8),
+                color: const Color(0xFFF8F8F8),
                 alignment: Alignment.topLeft,
                 child: TabBar(
                   isScrollable: true,
@@ -169,10 +149,10 @@ class _ReportScreenState extends State<ReportScreen>
                   controller: _tabController,
                   tabs: [
                     Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                         right: 30,
                       ),
-                      child: Tab(
+                      child: const Tab(
                         child: Text(
                           '+ IN',
                           style: TextStyle(
@@ -184,7 +164,7 @@ class _ReportScreenState extends State<ReportScreen>
                     // SizedBox(
                     //   width: 10,
                     // ),
-                    Tab(
+                    const Tab(
                       child: Text(
                         '- OUT',
                         style: TextStyle(
@@ -197,17 +177,17 @@ class _ReportScreenState extends State<ReportScreen>
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
               child: Container(
                 height: 470,
                 width: 200,
                 // height: MediaQuery.of(context).size.height,
                 // width: MediaQuery.of(context).size.width,
 
-                color: Color(0xFFF8F8F8),
+                color: const Color(0xFFF8F8F8),
                 child: TabBarView(
                   controller: _tabController,
-                  children: [
+                  children: const [
                     Tab(
                       child: PlusInPage(),
                     ),

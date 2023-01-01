@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,9 +34,16 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
   String value = '';
   final _sugestionfieldController = TextEditingController();
   final _amount = TextEditingController();
+  var getIp;
+
+  Future callingIp() async {
+    getIp = await Ipify.ipv4();
+    setState(() {});
+  }
+
 //? Send Mobile Recharge data..
   Future<void> sendRechargeData(
-      number, amount, is_trem, choise, mrName, addLogo) async {
+      number, amount, is_trem, choise, mrName, addLogo, ipAddress) async {
     Map<String, String> data = {
       "phone_number": number,
       "amount": amount,
@@ -43,6 +51,7 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
       "choice": choise,
       "bank_name": mrName,
       "add_logo": addLogo,
+      "ip_address": ipAddress.toString(),
     };
     var showToken = await stroge.read(key: 'token');
     var responce =
@@ -154,6 +163,7 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
         ),
         body: GestureDetector(
           onTap: () {
+            callingIp();
             FocusScope.of(context).unfocus();
           },
           child: Stack(
@@ -520,6 +530,7 @@ class _RechargeFormPageState extends State<RechargeFormPage> {
                                             value,
                                             widget.name,
                                             widget.logo,
+                                            getIp,
                                           );
 //?
                                           setState(

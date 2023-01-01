@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:wallets_app/Pages/HomePage.dart';
 import 'package:wallets_app/Pages/Screen/buttom_navigation.dart';
 import 'package:wallets_app/Pages/Screen/notifiations/notification.dart';
-import 'package:wallets_app/Pages/WelcomePage.dart';
+import 'package:wallets_app/models/services/all_get_api.dart';
 
 class PaymentConfirm extends StatelessWidget {
   const PaymentConfirm({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class PaymentConfirm extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFF4F8FB),
+        backgroundColor: const Color(0xFFF4F8FB),
         appBar: AppBar(
           elevation: 0.3,
           backgroundColor: Colors.white,
@@ -22,14 +22,7 @@ class PaymentConfirm extends StatelessWidget {
           leading: Container(
             margin: const EdgeInsets.only(left: 10),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomePage(),
-                  ),
-                );
-              },
+              onTap: () {},
               child: SvgPicture.asset(
                 "assets/wallet_logo.svg",
                 // color: Colors.red,
@@ -40,15 +33,15 @@ class PaymentConfirm extends StatelessWidget {
           actions: [
             Container(
               padding: const EdgeInsets.only(
-                  // right: 4,
-                  ),
+                right: 4,
+              ),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return NotificationPage();
+                        return const NotificationPage();
                       },
                     ),
                   );
@@ -64,7 +57,8 @@ class PaymentConfirm extends StatelessWidget {
         body: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 50),
+              margin: const EdgeInsets.only(top: 50),
+              // color: Colors.white.withOpacity(0.8),
               child: Center(
                 child: Column(
                   children: [
@@ -72,17 +66,26 @@ class PaymentConfirm extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset('assets/tk.png'),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Column(
-                          children: const [
-                            Text(
-                              '10,00,000 BDT',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          children: [
+                            FutureBuilder<int>(
+                              future: getBalance(
+                                  "http://zune360.com/api/user/current_balance/"),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                    '\৳ ' + snapshot.data.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                }
+                                return const Text('');
+                              },
                             ),
                             SizedBox(
                               height: 10,
@@ -104,20 +107,16 @@ class PaymentConfirm extends StatelessWidget {
             ),
             //
             //
-            //1st container use white color and also using opacity....
+//1st container use white color and also using opacity....
             Container(
-              height: height,
-              width: width,
               color: Colors.white.withOpacity(0.8),
             ),
-            //
-            //
-            //2nd container use Red color and text , icon , button etc..
+//2nd container use Red color and text , icon , button etc..
             Container(
-              height: height,
+              // color: Colors.white.withOpacity(0.8),
+              height: height.h,
               width: width,
-              // color: Color(0xFFD6001B),
-              transform: Matrix4.translationValues(0, 150, 0),
+              transform: Matrix4.translationValues(0, height * 0.2.h, 0),
               decoration: const BoxDecoration(
                 color: Color(0xFFD6001B),
                 borderRadius: BorderRadius.only(
@@ -126,83 +125,73 @@ class PaymentConfirm extends StatelessWidget {
                 ),
               ),
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(
-                      top: 100,
+                    margin: EdgeInsets.only(
+                      top: 100.h,
                     ),
                     child: Image.asset(
                       'assets/Right_logo.png',
-                      height: 80,
-                      width: 80,
+                      height: 80.h,
+                      width: 80.w,
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 30.h,
                   ),
-                  Container(
-                    child: Text(
-                      'Payment',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  const Text(
+                    'Payment',
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
-                  SizedBox(),
-                  Container(
-                    child: Text(
-                      "Successful!",
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                  const Text(
+                    "Successful!",
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 10.h,
                   ),
-                  Container(
-                    child: Text(
-                      'Click the button bellow to continue',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
-                      ),
+                  const Text(
+                    'Click the button bellow to continue',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: height / 4.3),
-                  Container(
-                    // margin: EdgeInsets.only(
-                    //   top: 0,
-                    // ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => BottomNavigation(),
-                            transitionDuration: Duration(seconds: 0),
-                            transitionsBuilder: (_, a, __, c) =>
-                                FadeTransition(opacity: a, child: c),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Continue',
-                        style: TextStyle(
-                          fontSize: 19,
-                          color: Colors.black,
+                  SizedBox(
+                    height: height * 0.1.h,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => BottomNavigation(),
+                          transitionDuration: Duration(seconds: 0),
+                          transitionsBuilder: (_, a, __, c) =>
+                              FadeTransition(opacity: a, child: c),
                         ),
+                      );
+                    },
+                    child: Text(
+                      'Continue',
+                      style: TextStyle(
+                        fontSize: 19,
+                        color: Colors.black,
                       ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(width / 1.3, 50),
-                        primary: Colors.white,
-                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(width / 1.3, 50),
+                      backgroundColor: Colors.white,
                     ),
                   ),
                 ],

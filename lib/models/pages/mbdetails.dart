@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,12 +29,15 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
   final _amount = TextEditingController();
   String value = '';
   bool isChecked = false;
-
+  var getIp;
 //?
+  callingIpAddress() async {
+    getIp = await Ipify.ipv4();
+  }
 
 //!
   Future<void> sendData(
-      number, amount, is_trem, choise, mbName, addLogo) async {
+      number, amount, is_trem, choise, mbName, addLogo, ipAddress) async {
     Map<String, String> data = {
       "phone_number": number,
       "amount": amount,
@@ -41,7 +45,9 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
       "choice": choise,
       "bank_name": mbName,
       "add_logo": addLogo,
+      "ip_address": ipAddress.toString(),
     };
+    // getIp = await Ipify.ipv4();
     var showToken = await storge.read(key: 'token');
     var responce =
         await http.post(Uri.parse('http://zune360.com/request/mobilebanking/'),
@@ -49,7 +55,8 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
               HttpHeaders.authorizationHeader: "token $showToken",
             },
             body: data);
-    if (responce.statusCode == 200) {
+    print(data);
+    if (responce.statusCode == 201) {
       print(data);
     } else {
       print('not Ok');
@@ -157,12 +164,12 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
 //? Using Stack widget....(It is showing a PinScreen page....When click send button....)
         body: GestureDetector(
           onTap: () {
+            callingIpAddress();
             FocusScope.of(context).unfocus();
-            // _fetchContacts();
           },
           child: Stack(
             children: [
-              //Using AnimatedConatner widgets...
+//? Using AnimatedConatner widgets...
               AnimatedContainer(
                 height: windowHeight,
                 width: windowWidth,
@@ -482,7 +489,7 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(290, 50),
-                                    primary: const Color(0xFFD6001B),
+                                    backgroundColor: const Color(0xFFD6001B),
                                   ),
                                   onPressed: () {
 //! this conditions for form valitions....
@@ -496,9 +503,9 @@ class _MobileBankingFormPageState extends State<MobileBankingFormPage> {
                                           value,
                                           widget.name,
                                           widget.logo,
+                                          getIp,
                                         );
-//?
-//!Page change ..
+//!Page change...
                                         setState(
                                           () {
                                             if (_pagestate == 0) {

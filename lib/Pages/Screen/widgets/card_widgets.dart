@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardWidgets extends StatelessWidget {
   final String label;
@@ -16,14 +17,14 @@ class CardWidgets extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(
-          top: 24,
-          left: 30,
-          right: 30,
+        padding: EdgeInsets.only(
+          top: 24.h,
+          left: 26.h,
+          right: 26.h,
         ),
         child: Container(
-          height: 60,
-          width: 350,
+          height: 50.h,
+          width: 350.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
@@ -40,8 +41,8 @@ class CardWidgets extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: const EdgeInsets.only(
-                  left: 20,
+                margin: EdgeInsets.only(
+                  left: 20.h,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -51,13 +52,13 @@ class CardWidgets extends StatelessWidget {
                       icon,
                       color: const Color(0xFFD6001B),
                     ),
-                    const SizedBox(
-                      width: 10,
+                    SizedBox(
+                      width: 10.w,
                     ),
                     Text(
                       label,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: 14.sp,
                         color: Colors.grey,
                       ),
                     ),

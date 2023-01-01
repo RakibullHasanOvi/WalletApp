@@ -1,6 +1,6 @@
 // import 'dart:convert';
 import 'dart:io';
-
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,7 +10,6 @@ import '../../Pages/Screen/addFund.dart';
 import '../../Pages/Screen/buttom_navigation.dart';
 import '../../Pages/Screen/notifiations/notification.dart';
 import 'package:http/http.dart' as http;
-
 import '../services/all_get_api.dart';
 
 class BankFormPage extends StatefulWidget {
@@ -32,9 +31,16 @@ class _BankFormPageState extends State<BankFormPage> {
   final _bankAcountNumber = TextEditingController();
   final _bankAcountName = TextEditingController();
   final _branchName = TextEditingController();
+  var getIp;
+
+  Future ipAddCalling() async {
+    getIp = await Ipify.ipv4();
+    // setState(() {});
+  }
+
 //?
-  Future<void> sendBankData(
-      bankName, amount, baNumber, baName, branchName, is_trem, addLogo) async {
+  Future<void> sendBankData(bankName, amount, baNumber, baName, branchName,
+      is_trem, addLogo, ipAddress) async {
     Map<String, String> data = {
       "bank_name": bankName,
       "amount": amount,
@@ -43,6 +49,7 @@ class _BankFormPageState extends State<BankFormPage> {
       "branch_name": branchName,
       "is_term": is_trem,
       "add_logo": addLogo,
+      "ip_address": ipAddress.toString(),
     };
     var showToken = await stroge.read(key: 'token');
     var responce =
@@ -51,7 +58,8 @@ class _BankFormPageState extends State<BankFormPage> {
               HttpHeaders.authorizationHeader: "token $showToken",
             },
             body: data);
-    if (responce.statusCode == 200) {
+    print(data);
+    if (responce.statusCode == 201) {
       print(data);
     }
   }
@@ -161,6 +169,7 @@ class _BankFormPageState extends State<BankFormPage> {
         ),
         body: InkWell(
           onTap: () {
+            ipAddCalling();
             FocusScope.of(context).unfocus();
           },
           child: Form(
@@ -541,6 +550,7 @@ class _BankFormPageState extends State<BankFormPage> {
                                           _branchName.text,
                                           isChecked.toString(),
                                           widget.logo,
+                                          getIp,
                                         );
 //?
                                         setState(
